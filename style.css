@@ -2,19 +2,28 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   padding: 20px;
-  background: #f7f7f7;
-  color: #333;
+  background: #000; /* Black background */
+  color: #fff;
 }
 
 h1 {
-  color: #2c3e50;
+  color: #f1c40f; /* Gold for title */
 }
 
-#buttons {
-  margin-bottom: 20px;
+label {
+  margin: 0 10px;
+  font-weight: bold;
 }
 
-#buttons button {
+select, #wordInput {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1em;
+}
+
+button {
   background: #3498db;
   color: white;
   border: none;
@@ -26,7 +35,7 @@ h1 {
   transition: background 0.3s ease;
 }
 
-#buttons button:hover {
+button:hover {
   background: #2980b9;
 }
 
@@ -42,21 +51,18 @@ h1 {
   height: 100px;
   margin: 5px;
   border-radius: 5px;
-  background: white;
+  background: #111; /* Dark behind images */
   padding: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 0 10px rgba(255,255,255,0.2); /* Glow */
 }
 
-#wordInput {
-  padding: 10px;
-  font-size: 1.2em;
-  width: 250px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+#score {
+  font-weight: bold;
+  color: #2ecc71; /* Green for score */
 }
 
 footer {
   margin-top: 40px;
   font-size: 0.9em;
-  color: #777;
+  color: #999;
 }
