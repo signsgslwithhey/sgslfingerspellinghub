@@ -2,12 +2,12 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   padding: 20px;
-  background: #1a1a1a; /* Black background */
+  background: #1a1a1a; /* Softer dark gray */
   color: #fff;
 }
 
 h1 {
-  color: #f1c40f; /* Gold for title */
+  color: #f1c40f; /* Gold */
 }
 
 label {
@@ -51,14 +51,14 @@ button:hover {
   height: 100px;
   margin: 5px;
   border-radius: 5px;
-  background: #111; /* Dark behind images */
+  background: #111; 
   padding: 5px;
-  box-shadow: 0 0 10px rgba(255,255,255,0.2); /* Glow */
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
 #score {
   font-weight: bold;
-  color: #2ecc71; /* Green for score */
+  color: #2ecc71;
 }
 
 footer {
