@@ -3,17 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SgSL Fingerspelling Hub</title>
+  <title>SgSL Fingerspelling Practice</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>SgSL Fingerspelling Hub</h1>
-  <p>Type any word to see it in SgSL fingerspelling:</p>
-  <input type="text" id="wordInput" placeholder="Type a word...">
+  <h1>SgSL Fingerspelling Practice</h1>
+
+  <!-- Buttons Section -->
+  <div id="buttons">
+    <button id="newWordBtn">New Word</button>
+    <button id="replayBtn">Replay</button>
+  </div>
+
+  <!-- Output Section -->
   <div id="output"></div>
 
+  <!-- Answer Section -->
+  <p>Type your answer here:</p>
+  <input type="text" id="wordInput" placeholder="Type the word...">
+
   <footer>
-    <p>Created for SgSL learners</a></p>
+    <p>Created for SgSL learners | Inspired by 
+      <a href="https://asl.ms/" target="_blank">ASL.ms</a>
+    </p>
   </footer>
 
   <script src="script.js"></script>
