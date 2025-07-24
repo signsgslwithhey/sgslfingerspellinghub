@@ -1,13 +1,19 @@
-body {
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #1a1a1a !important; /* Force background */
+  color: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
-  padding: 20px;
-  background: #1a1a1a; /* Softer dark gray */
-  color: #fff;
 }
 
 h1 {
-  color: #f1c40f; /* Gold */
+  color: #f1c40f;
+}
+
+#settings, #buttons, footer {
+  background: transparent !important; /* No white blocks */
 }
 
 label {
@@ -21,6 +27,8 @@ select, #wordInput {
   border-radius: 5px;
   border: none;
   font-size: 1em;
+  background: #333;
+  color: #fff;
 }
 
 button {
@@ -45,13 +53,14 @@ button:hover {
   flex-wrap: wrap;
   justify-content: center;
   min-height: 120px;
+  background: transparent;
 }
 
 #output img {
   height: 100px;
   margin: 5px;
   border-radius: 5px;
-  background: #111; 
+  background: #111;
   padding: 5px;
   box-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
