@@ -26,4 +26,70 @@ function generateRandomWord() {
 
   let word = "";
   for (let i = 0; i < length; i++) {
-    word += letters[Math.floor(Math.]()
+    word += letters[Math.floor(Math.random() * letters.length)];
+  }
+  return word;
+}
+
+// Show fingerspelling images one by one
+function showWordAnimated(word) {
+  output.innerHTML = "";
+  let i = 0;
+
+  function showNext() {
+    if (i < word.length) {
+      const char = word[i];
+      const img = document.createElement("img");
+      img.src = `images/${char}.png`;
+      img.alt = char;
+      output.appendChild(img);
+      i++;
+      setTimeout(showNext, displaySpeed);
+    }
+  }
+
+  showNext();
+}
+
+// New random "word"
+function newWord() {
+  currentWord = generateRandomWord();
+  wordInput.value = "";
+  showWordAnimated(currentWord);
+}
+
+// Replay
+function replayWord() {
+  if (currentWord) showWordAnimated(currentWord);
+}
+
+// Check answer
+wordInput.addEventListener("input", function () {
+  if (this.value.toLowerCase() === currentWord) {
+    score++;
+    scoreDisplay.textContent = score;
+    setTimeout(newWord, 1000);
+  }
+});
+
+// Speed settings
+speedSelect.addEventListener("change", function () {
+  displaySpeed = parseInt(this.value);
+});
+
+slowerBtn.addEventListener("click", () => {
+  displaySpeed += 100;
+  alert("Speed: " + displaySpeed + "ms per letter");
+});
+
+fasterBtn.addEventListener("click", () => {
+  displaySpeed = Math.max(100, displaySpeed - 100);
+  alert("Speed: " + displaySpeed + "ms per letter");
+});
+
+// Buttons
+newWordBtn.addEventListener("click", newWord);
+replayBtn.addEventListener("click", replayWord);
+
+// Start first word
+newWord();
