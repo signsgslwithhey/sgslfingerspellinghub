@@ -3,30 +3,57 @@ sgsl-fingerspelling/
 ├── index.html
 ├── style.css
 ├── script.js
+├── words.js  ✅ (new file with 10,000 words)
 └── images/
     ├── A.png
+    ├── AA.png
     ├── B.png
+    ├── BB.png
     ├── C.png
+    ├── CC.png
     ├── D.png
+    ├── DD.png
     ├── E.png
+    ├── EE.png
     ├── F.png
+    ├── FF.png
     ├── G.png
+    ├── GG.png
     ├── H.png
+    ├── HH.png
     ├── I.png
+    ├── II.png
     ├── J.png
+    ├── JJ.png
     ├── K.png
+    ├── KK.png
     ├── L.png
+    ├── LL.png
     ├── M.png
+    ├── MM.png
     ├── N.png
+    ├── NN.png
     ├── O.png
+    ├── OO.png
     ├── P.png
+    ├── PP.png
     ├── Q.png
+    ├── QQ.png
     ├── R.png
+    ├── RR.png
     ├── S.png
+    ├── SS.png
     ├── T.png
+    ├── TT.png
     ├── U.png
+    ├── UU.png
     ├── V.png
+    ├── VV.png
     ├── W.png
+    ├── WW.png
     ├── X.png
+    ├── XX.png
     ├── Y.png
+    ├── YY.png
     ├── Z.png
+    ├── ZZ.png
