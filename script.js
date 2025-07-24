@@ -1,14 +1,22 @@
-// Sample word list (replace/add more SgSL words)
-const wordList = ["hello", "sgsl", "sign", "learn", "practice", "deaf", "love"];
+// Sample word list - replace with your SgSL word list
+const wordList = ["hello", "sgsl", "sign", "learn", "practice", "deaf", "love", "happy", "good", "bad"];
 
 let currentWord = "";
+let displaySpeed = 1000;
+let score = 0;
 
-// Get elements
+// Elements
 const output = document.getElementById("output");
 const newWordBtn = document.getElementById("newWordBtn");
 const replayBtn = document.getElementById("replayBtn");
+const speedSelect = document.getElementById("speedSelect");
+const maxLetters = document.getElementById("maxLetters");
+const slowerBtn = document.getElementById("slowerBtn");
+const fasterBtn = document.getElementById("fasterBtn");
+const scoreDisplay = document.getElementById("score");
+const wordInput = document.getElementById("wordInput");
 
-// Function to show fingerspelling images one by one
+// Show fingerspelling images one by one
 function showWordAnimated(word) {
   output.innerHTML = "";
   let i = 0;
@@ -23,32 +31,64 @@ function showWordAnimated(word) {
         output.appendChild(img);
       }
       i++;
-      setTimeout(showNext, 600); // adjust speed (ms)
+      setTimeout(showNext, displaySpeed);
     }
   }
 
   showNext();
 }
 
-// Generate a new random word
+// Pick random word based on max letters
+function getRandomWord() {
+  const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
+  let filtered = wordList;
+
+  if (filterLength) {
+    filtered = wordList.filter(word => word.length <= filterLength);
+  }
+
+  return filtered[Math.floor(Math.random() * filtered.length)];
+}
+
+// New word
 function newWord() {
-  currentWord = wordList[Math.floor(Math.random() * wordList.length)];
+  currentWord = getRandomWord();
+  wordInput.value = "";
   showWordAnimated(currentWord);
 }
 
-// Replay current word
+// Replay word
 function replayWord() {
-  if (currentWord) {
-    showWordAnimated(currentWord);
-  }
+  if (currentWord) showWordAnimated(currentWord);
 }
 
-// Event Listeners
+// Check answer
+wordInput.addEventListener("input", function () {
+  if (this.value.toLowerCase() === currentWord) {
+    score++;
+    scoreDisplay.textContent = score;
+    setTimeout(newWord, 1000); // Next word after correct answer
+  }
+});
+
+// Speed settings
+speedSelect.addEventListener("change", function () {
+  displaySpeed = parseInt(this.value);
+});
+
+slowerBtn.addEventListener("click", () => {
+  displaySpeed += 100;
+  alert("Speed: " + displaySpeed + "ms per letter");
+});
+
+fasterBtn.addEventListener("click", () => {
+  displaySpeed = Math.max(100, displaySpeed - 100);
+  alert("Speed: " + displaySpeed + "ms per letter");
+});
+
+// Button events
 newWordBtn.addEventListener("click", newWord);
 replayBtn.addEventListener("click", replayWord);
 
-// Typing logic (if you want immediate fingerspelling of typed word)
-document.getElementById("wordInput").addEventListener("input", function() {
-  const word = this.value.toLowerCase();
-  // You can keep this or disable it for practice mode
-});
+// Start with a word
+newWord();
