@@ -9,18 +9,48 @@
 <body>
   <h1>SgSL Fingerspelling Practice</h1>
 
-  <!-- Buttons Section -->
+  <!-- Settings -->
+  <div id="settings">
+    <label>Maximum number of letters:</label>
+    <select id="maxLetters">
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="6">7</option>
+      <option value="6">8</option>
+      <option value="6">9</option>
+      <option value="6">10</option>
+      <option value="any" selected>Any</option>
+    </select>
+
+    <label>Set your speed:</label>
+    <select id="speedSelect">
+      <option value="1500">Slow</option>
+      <option value="1000" selected>Medium</option>
+      <option value="600">Fast</option>
+      <option value="300">Deaf</option>
+    </select>
+
+    <button id="slowerBtn">Slower</button>
+    <button id="fasterBtn">Faster</button>
+  </div>
+
+  <!-- Buttons -->
   <div id="buttons">
     <button id="newWordBtn">New Word</button>
     <button id="replayBtn">Replay</button>
   </div>
 
-  <!-- Output Section -->
+  <!-- Output -->
   <div id="output"></div>
 
-  <!-- Answer Section -->
+  <!-- Answer Input -->
   <p>Type your answer here:</p>
   <input type="text" id="wordInput" placeholder="Type the word...">
+
+  <!-- Score -->
+  <p>Your score: <span id="score">0</span></p>
 
   <footer>
     <p>Created for SgSL learners | Inspired by 
