@@ -1,3 +1,10 @@
+// ✅ Common vocabulary word list (replace or expand as needed)
+const wordList = [
+  "CAT", "DOG", "HOUSE", "BOOK", "APPLE", "PIZZA", "BALL", "LOVE", 
+  "HAPPY", "TEACH", "SCHOOL", "FOOD", "THANK", "HELP", "FRIEND",
+  "WATER", "MONEY", "PHONE", "DEAF", "SIGN", "HELLO", "GOOD", "BAD"
+];
+
 let currentWord = "";
 let displaySpeed = 1000;
 let score = 0;
@@ -12,36 +19,28 @@ const slowerBtn = document.getElementById("slowerBtn");
 const fasterBtn = document.getElementById("fasterBtn");
 const scoreDisplay = document.getElementById("score");
 const wordInput = document.getElementById("wordInput");
+const checkBtn = document.getElementById("checkBtn");
 
-// Generate random letters for the "word"
-function generateRandomWord() {
-  const letters = "abcdefghijklmnopqrstuvwxyz";
-  let length = 3;
-
-  if (maxLetters.value === "any") {
-    length = Math.floor(Math.random() * 4) + 3; // random 3–6 letters
-  } else {
-    length = parseInt(maxLetters.value);
-  }
-
-  let word = "";
-  for (let i = 0; i < length; i++) {
-    word += letters[Math.floor(Math.random() * letters.length)];
-  }
-  return word;
-}
-
-// Show fingerspelling images one by one
+// ✅ Show fingerspelling images (supporting double-letter images)
 function showWordAnimated(word) {
   output.innerHTML = "";
   let i = 0;
 
   function showNext() {
     if (i < word.length) {
-      const char = word[i];
-      const img = document.createElement("img");
-      img.src = `images/${char}.png`;
-      img.alt = char;
+      let char = word[i];
+      let img = document.createElement("img");
+
+      // Check for double letter (e.g., ZZ, LL)
+      if (i < word.length - 1 && word[i] === word[i + 1]) {
+        img.src = `images/${char.toLowerCase()}${char.toLowerCase()}.png`; // e.g., zz.png
+        img.alt = char + char;
+        i++; // Skip next because it's combined
+      } else {
+        img.src = `images/${char.toLowerCase()}.png`;
+        img.alt = char;
+      }
+
       output.appendChild(img);
       i++;
       setTimeout(showNext, displaySpeed);
@@ -51,45 +50,16 @@ function showWordAnimated(word) {
   showNext();
 }
 
-// New random "word"
-function newWord() {
-  currentWord = generateRandomWord();
-  wordInput.value = "";
-  showWordAnimated(currentWord);
-}
-
-// Replay
-function replayWord() {
-  if (currentWord) showWordAnimated(currentWord);
-}
-
-// Check answer
-wordInput.addEventListener("input", function () {
-  if (this.value.toLowerCase() === currentWord) {
-    score++;
-    scoreDisplay.textContent = score;
-    setTimeout(newWord, 1000);
+// ✅ Generate a random word based on maximum letters
+function getRandomWord() {
+  const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
+  let filtered = wordList;
+  if (filterLength) {
+    filtered = wordList.filter(word => word.length <= filterLength);
   }
-});
+  return filtered[Math.floor(Math.random() * filtered.length)];
+}
 
-// Speed settings
-speedSelect.addEventListener("change", function () {
-  displaySpeed = parseInt(this.value);
-});
-
-slowerBtn.addEventListener("click", () => {
-  displaySpeed += 100;
-  alert("Speed: " + displaySpeed + "ms per letter");
-});
-
-fasterBtn.addEventListener("click", () => {
-  displaySpeed = Math.max(100, displaySpeed - 100);
-  alert("Speed: " + displaySpeed + "ms per letter");
-});
-
-// Buttons
-newWordBtn.addEventListener("click", newWord);
-replayBtn.addEventListener("click", replayWord);
-
-// Start first word
-newWord();
+// ✅ Start a new word
+function newWord() {
+  currentWord
