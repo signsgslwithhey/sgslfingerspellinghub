@@ -41,16 +41,26 @@ function showLetterSequence(word) {
   const interval = setInterval(() => {
     if (index < word.length) {
       const char = word[index];
+
+      // Show the letter image
       if (index > 0 && word[index] === word[index - 1]) {
         img.src = `images/${char.toLowerCase()}${char.toLowerCase()}.png`;
       } else {
         img.src = `images/${char.toLowerCase()}.png`;
       }
+
       index++;
+
+      // After a short pause, flash to black before the next letter
+      setTimeout(() => {
+        img.src = ""; // remove the image
+        img.style.background = "#000"; // black screen
+      }, currentSpeed * 0.6); // disappears before next cycle
+
     } else {
-      // turn black at the end
+      // End of word — stay black
       img.src = "";
-      img.style.background = "#000"; 
+      img.style.background = "#000";
       clearInterval(interval);
     }
   }, currentSpeed);
