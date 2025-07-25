@@ -1,9 +1,9 @@
 let currentWord = "";
-let displaySpeed = 1000;
+let displaySpeed = 1000; // default
 let score = 0;
 
 // Elements
-const output = document.getElementById("output");
+const outputDiv = document.getElementById("output");
 const newWordBtn = document.getElementById("newWordBtn");
 const replayBtn = document.getElementById("replayBtn");
 const speedSelect = document.getElementById("speedSelect");
@@ -13,9 +13,9 @@ const fasterBtn = document.getElementById("fasterBtn");
 const scoreDisplay = document.getElementById("score");
 const wordInput = document.getElementById("wordInput");
 
-// Generate random letters for the "word"
+// Generate a random word (if you don't want to use words.js)
 function generateRandomWord() {
-  const letters = "abcdefghijklmnopqrstuvwxyz";
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   let length = 3;
 
   if (maxLetters.value === "any") {
@@ -31,7 +31,7 @@ function generateRandomWord() {
   return word;
 }
 
-// Show fingerspelling images one by one
+// Flashing sequence like ASL.ms
 function showLetterSequence(word) {
   let index = 0;
   outputDiv.innerHTML = ""; // clear first
@@ -49,62 +49,59 @@ function showLetterSequence(word) {
         img.src = `images/${char.toLowerCase()}.png`;
       }
 
-      index++;
-
-      // After a short pause, flash to black before the next letter
+      // Make it disappear to black before next letter
       setTimeout(() => {
-        img.src = ""; // remove the image
-        img.style.background = "#000"; // black screen
-      }, currentSpeed * 0.6); // disappears before next cycle
+        img.src = "";
+        img.style.background = "#000";
+      }, displaySpeed * 0.6);
 
+      index++;
     } else {
-      // End of word — stay black
+      // End of word, stay black
       img.src = "";
       img.style.background = "#000";
       clearInterval(interval);
     }
-  }, currentSpeed);
+  }, displaySpeed);
 }
 
-// New random "word"
+// New random word
 function newWord() {
   currentWord = generateRandomWord();
   wordInput.value = "";
-  showWordAnimated(currentWord);
+  showLetterSequence(currentWord);
 }
 
-// Replay
+// Replay the same word
 function replayWord() {
-  if (currentWord) showWordAnimated(currentWord);
+  if (currentWord) showLetterSequence(currentWord);
 }
 
 // Check answer
-wordInput.addEventListener("input", function () {
-  if (this.value.toLowerCase() === currentWord) {
+document.getElementById("checkBtn").addEventListener("click", () => {
+  if (wordInput.value.toUpperCase() === currentWord) {
     score++;
-    scoreDisplay.textContent = score;
-    setTimeout(newWord, 1000);
+    alert("✅ Correct!");
+  } else {
+    alert(`❌ Wrong! The word was: ${currentWord}`);
   }
+  scoreDisplay.textContent = score;
 });
 
 // Speed settings
-speedSelect.addEventListener("change", function () {
-  displaySpeed = parseInt(this.value);
+speedSelect.addEventListener("change", () => {
+  displaySpeed = parseInt(speedSelect.value);
 });
-
 slowerBtn.addEventListener("click", () => {
   displaySpeed += 100;
-  alert("Speed: " + displaySpeed + "ms per letter");
 });
-
 fasterBtn.addEventListener("click", () => {
   displaySpeed = Math.max(100, displaySpeed - 100);
-  alert("Speed: " + displaySpeed + "ms per letter");
 });
 
 // Buttons
 newWordBtn.addEventListener("click", newWord);
 replayBtn.addEventListener("click", replayWord);
 
-// Start first word
+// Start first word automatically
 newWord();
