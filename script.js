@@ -32,23 +32,28 @@ function generateRandomWord() {
 }
 
 // Show fingerspelling images one by one
-function showWordAnimated(word) {
-  output.innerHTML = "";
-  let i = 0;
+function showLetterSequence(word) {
+  let index = 0;
+  outputDiv.innerHTML = ""; // clear first
+  const img = document.createElement("img");
+  outputDiv.appendChild(img);
 
-  function showNext() {
-    if (i < word.length) {
-      const char = word[i];
-      const img = document.createElement("img");
-      img.src = `images/${char}.png`;
-      img.alt = char;
-      output.appendChild(img);
-      i++;
-      setTimeout(showNext, displaySpeed);
+  const interval = setInterval(() => {
+    if (index < word.length) {
+      const char = word[index];
+      if (index > 0 && word[index] === word[index - 1]) {
+        img.src = `images/${char.toLowerCase()}${char.toLowerCase()}.png`;
+      } else {
+        img.src = `images/${char.toLowerCase()}.png`;
+      }
+      index++;
+    } else {
+      // turn black at the end
+      img.src = "";
+      img.style.background = "#000"; 
+      clearInterval(interval);
     }
-  }
-
-  showNext();
+  }, currentSpeed);
 }
 
 // New random "word"
