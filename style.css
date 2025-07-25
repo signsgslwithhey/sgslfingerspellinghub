@@ -57,7 +57,7 @@ button:hover {
 }
 
 #output img {
-  height: 300px; /* was 100px, now ~3x */
+  height: 500px; 
   margin: 10px;
   border-radius: 10px;
   background: #111;
