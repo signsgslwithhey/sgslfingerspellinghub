@@ -3,7 +3,7 @@ sgsl-fingerspelling/
 ├── index.html
 ├── style.css
 ├── script.js
-├── words.js  ✅ (new file with 10,000 words)
+├── words.js
 └── images/
     ├── a.png
     ├── aa.png
