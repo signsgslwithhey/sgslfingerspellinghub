@@ -1,10 +1,9 @@
-// ✅ Common dictionary-like word list (you can expand this)
+// words.js (Example - replace with full 10,000 words)
 const wordList = [
-  "CAT", "DOG", "HOUSE", "BOOK", "APPLE", "PIZZA", "BALL", "LOVE",
-  "HAPPY", "TEACH", "SCHOOL", "FOOD", "THANK", "HELP", "FRIEND",
-  "WATER", "MONEY", "PHONE", "DEAF", "SIGN", "HELLO", "GOOD", "BAD",
-  "CHAIR", "TABLE", "LIGHT", "BAG", "WATCH", "EAT", "SLEEP", "RUN",
-  "WALK", "COOK", "PLAY", "WORK", "READ", "WRITE"
+  "CAT","DOG","HOUSE","APPLE","PIZZA","BALL","LOVE","HAPPY","TEACH","SCHOOL",
+  "THANK","FRIEND","WATER","PHONE","DEAF","SIGN","HELLO","CHAIR","LIGHT",
+  "EAT","SLEEP","RUN","WORK","READ","WRITE","BIRD","MOUSE","PAPER","TABLE"
+  // ... (add up to 10,000 words in CAPS)
 ];
 
 let currentWord = "";
