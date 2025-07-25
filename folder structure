@@ -4,7 +4,7 @@ sgsl-fingerspelling/
 ├── style.css
 ├── script.js
 ├── words.js
-└── images/
+└── /images/
     ├── a.png
     ├── aa.png
     ├── b.png
