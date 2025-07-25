@@ -32,19 +32,23 @@ function showLetterSequence(word) {
   const interval = setInterval(() => {
     if (index < word.length) {
       const char = word[index];
+      const lower = char.toLowerCase();
+
+      // ✅ Double-letter logic
       if (index > 0 && word[index] === word[index - 1]) {
-        img.src = `images/${char.toLowerCase()}${char.toLowerCase()}.png`;
+        img.src = `images/${lower}${lower}.png`; // e.g., ll.png
       } else {
-        img.src = `images/${char.toLowerCase()}.png`;
+        img.src = `images/${lower}.png`;
       }
+
       index++;
     } else {
-      // turn black at the end
+      // ✅ End of word → blank/black screen
       img.src = "";
-      img.style.background = "#000"; 
+      img.style.background = "#000";
       clearInterval(interval);
     }
-  }, currentSpeed);
+  }, displaySpeed);
 }
 
   showNext();
