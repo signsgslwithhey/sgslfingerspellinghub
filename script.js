@@ -23,30 +23,29 @@ const wordInput = document.getElementById("wordInput");
 const checkBtn = document.getElementById("checkBtn");
 
 // ✅ Show fingerspelling images (with double-letter support)
-function showWordAnimated(word) {
-  output.innerHTML = "";
-  let i = 0;
+function showLetterSequence(word) {
+  let index = 0;
+  outputDiv.innerHTML = ""; // clear first
+  const img = document.createElement("img");
+  outputDiv.appendChild(img);
 
-  function showNext() {
-    if (i < word.length) {
-      let char = word[i];
-      let img = document.createElement("img");
-
-      // Check double letters (e.g., ZZ, LL)
-      if (i < word.length - 1 && word[i] === word[i + 1]) {
+  const interval = setInterval(() => {
+    if (index < word.length) {
+      const char = word[index];
+      if (index > 0 && word[index] === word[index - 1]) {
         img.src = `images/${char.toLowerCase()}${char.toLowerCase()}.png`;
-        img.alt = char + char;
-        i++;
       } else {
         img.src = `images/${char.toLowerCase()}.png`;
-        img.alt = char;
       }
-
-      output.appendChild(img);
-      i++;
-      setTimeout(showNext, displaySpeed);
+      index++;
+    } else {
+      // turn black at the end
+      img.src = "";
+      img.style.background = "#000"; 
+      clearInterval(interval);
     }
-  }
+  }, currentSpeed);
+}
 
   showNext();
 }
