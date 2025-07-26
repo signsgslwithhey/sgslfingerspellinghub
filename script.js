@@ -1,5 +1,3 @@
-// words.js is loaded separately and provides `wordList`
-
 let currentWord = "";
 let displaySpeed = 1000;
 let score = 0;
@@ -16,36 +14,44 @@ const scoreDisplay = document.getElementById("score");
 const wordInput = document.getElementById("wordInput");
 const checkBtn = document.getElementById("checkBtn");
 
-// ✅ Show fingerspelling images (with double-letter support)
+// Show fingerspelling images (with blank.png before and after)
 function showLetterSequence(word) {
-  let index = 0;
-  outputDiv.innerHTML = ""; // clear output
+  let index = -1; // start at -1 to show blank.png first
+  outputDiv.innerHTML = "";
   const img = document.createElement("img");
+  img.style.width = "500px";
+  img.style.height = "500px";
+  img.style.background = "#0f0f0f";  // new background color
   outputDiv.appendChild(img);
 
   const interval = setInterval(() => {
-    if (index < word.length) {
+    if (index === -1) {
+      // Show blank.png before word
+      img.src = `images/blank.png`;
+      index++;
+    } else if (index < word.length) {
       const char = word[index];
       const lower = char.toLowerCase();
 
-      // Show double-letter image if current letter is same as previous
+      // Double-letter logic
       if (index > 0 && word[index] === word[index - 1]) {
-        img.src = `images/${lower}${lower}.png`; // e.g., ll.png
+        img.src = `images/${lower}${lower}.png`; // e.g. ll.png
       } else {
         img.src = `images/${lower}.png`;
       }
 
       index++;
+    } else if (index === word.length) {
+      // Show blank.png after word
+      img.src = `images/blank.png`;
+      index++;
     } else {
-      // End of sequence: clear image and stop interval
-      img.src = "";
-      img.style.background = "#0f0f0f";
       clearInterval(interval);
     }
   }, displaySpeed);
 }
 
-// ✅ Get random word based on max letters filter
+// Get random word
 function getRandomWord() {
   const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
   let filtered = wordList;
@@ -55,19 +61,19 @@ function getRandomWord() {
   return filtered[Math.floor(Math.random() * filtered.length)];
 }
 
-// ✅ Load a new word and show it
+// New word
 function newWord() {
   currentWord = getRandomWord();
   wordInput.value = "";
   showLetterSequence(currentWord);
 }
 
-// ✅ Replay current word
+// Replay
 function replayWord() {
   if (currentWord) showLetterSequence(currentWord);
 }
 
-// ✅ Check user input against current word
+// Check answer
 checkBtn.addEventListener("click", function () {
   const userAnswer = wordInput.value.toUpperCase().trim();
   if (userAnswer === currentWord) {
@@ -80,7 +86,7 @@ checkBtn.addEventListener("click", function () {
   }
 });
 
-// ✅ Speed controls
+// Speed controls
 speedSelect.addEventListener("change", () => displaySpeed = parseInt(speedSelect.value));
 slowerBtn.addEventListener("click", () => {
   displaySpeed += 100;
@@ -91,9 +97,9 @@ fasterBtn.addEventListener("click", () => {
   alert("Speed: " + displaySpeed + "ms per letter");
 });
 
-// ✅ Button event listeners
+// Button events
 newWordBtn.addEventListener("click", newWord);
 replayBtn.addEventListener("click", replayWord);
 
-// ✅ Start with first word
+// Start first word
 newWord();
