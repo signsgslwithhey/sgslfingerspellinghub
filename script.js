@@ -19,7 +19,7 @@ const checkBtn = document.getElementById("checkBtn");
 // ✅ Show fingerspelling images (with double-letter support)
 function showLetterSequence(word) {
   let index = 0;
-  outputDiv.innerHTML = ""; // clear first
+  outputDiv.innerHTML = ""; // clear output
   const img = document.createElement("img");
   outputDiv.appendChild(img);
 
@@ -28,7 +28,7 @@ function showLetterSequence(word) {
       const char = word[index];
       const lower = char.toLowerCase();
 
-      // ✅ Correct double-letter logic
+      // Show double-letter image if current letter is same as previous
       if (index > 0 && word[index] === word[index - 1]) {
         img.src = `images/${lower}${lower}.png`; // e.g., ll.png
       } else {
@@ -37,14 +37,15 @@ function showLetterSequence(word) {
 
       index++;
     } else {
-      img.src = ""; // blank at end
+      // End of sequence: clear image and stop interval
+      img.src = "";
       img.style.background = "#000";
       clearInterval(interval);
     }
   }, displaySpeed);
 }
 
-// ✅ Get random word
+// ✅ Get random word based on max letters filter
 function getRandomWord() {
   const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
   let filtered = wordList;
@@ -54,19 +55,19 @@ function getRandomWord() {
   return filtered[Math.floor(Math.random() * filtered.length)];
 }
 
-// ✅ New word
+// ✅ Load a new word and show it
 function newWord() {
   currentWord = getRandomWord();
   wordInput.value = "";
   showLetterSequence(currentWord);
 }
 
-// ✅ Replay
+// ✅ Replay current word
 function replayWord() {
   if (currentWord) showLetterSequence(currentWord);
 }
 
-// ✅ Check answer
+// ✅ Check user input against current word
 checkBtn.addEventListener("click", function () {
   const userAnswer = wordInput.value.toUpperCase().trim();
   if (userAnswer === currentWord) {
@@ -90,9 +91,9 @@ fasterBtn.addEventListener("click", () => {
   alert("Speed: " + displaySpeed + "ms per letter");
 });
 
-// ✅ Button events
+// ✅ Button event listeners
 newWordBtn.addEventListener("click", newWord);
 replayBtn.addEventListener("click", replayWord);
 
-// ✅ Start first word
+// ✅ Start with first word
 newWord();
