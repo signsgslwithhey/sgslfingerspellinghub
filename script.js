@@ -54,7 +54,7 @@ async function showLetterSequence(word) {
 
       // ✅ Adjust timing for first and last letter
       if (i === 0) {
-        await new Promise(r => setTimeout(r, displaySpeed * 1.5)); // First letter slower
+        await new Promise(r => setTimeout(r, displaySpeed * 2)); // First letter slower
       } else if (i === word.length - 1) {
         await new Promise(r => setTimeout(r, displaySpeed * 2)); // Last letter longest
       } else {
