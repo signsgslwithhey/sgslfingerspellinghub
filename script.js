@@ -4,6 +4,9 @@ let currentWord = "";
 let displaySpeed = 1000;
 let score = 0;
 
+// Multiplier for first/last letter based on speed
+let firstLastMultiplier = 1.5; // default for medium
+
 // Elements
 const outputDiv = document.getElementById("output");
 const newWordBtn = document.getElementById("newWordBtn");
@@ -26,7 +29,7 @@ function loadImage(src) {
   });
 }
 
-// ✅ Show fingerspelling images (with double-letter & slower first/last)
+// ✅ Show fingerspelling images (with double-letter & first/last multipliers)
 async function showLetterSequence(word) {
   outputDiv.innerHTML = ""; // clear output
 
@@ -52,11 +55,9 @@ async function showLetterSequence(word) {
       outputDiv.innerHTML = ""; // clear previous
       outputDiv.appendChild(img);
 
-      // ✅ Adjust timing for first and last letter
-      if (i === 0) {
-        await new Promise(r => setTimeout(r, displaySpeed * 2)); // First letter slower
-      } else if (i === word.length - 1) {
-        await new Promise(r => setTimeout(r, displaySpeed * 2)); // Last letter longest
+      // ✅ Adjust timing for first and last letters based on selected speed
+      if (i === 0 || i === word.length - 1) {
+        await new Promise(r => setTimeout(r, displaySpeed * firstLastMultiplier));
       } else {
         await new Promise(r => setTimeout(r, displaySpeed));
       }
@@ -114,7 +115,26 @@ checkBtn.addEventListener("click", function () {
 });
 
 // ✅ Speed controls
-speedSelect.addEventListener("change", () => displaySpeed = parseInt(speedSelect.value));
+speedSelect.addEventListener("change", () => {
+  displaySpeed = parseInt(speedSelect.value);
+
+  // Adjust multipliers based on selected option
+  switch (displaySpeed) {
+    case 1500: // Slow
+      firstLastMultiplier = 1;
+      break;
+    case 1000: // Medium
+      firstLastMultiplier = 1.5;
+      break;
+    case 600: // Fast
+      firstLastMultiplier = 1.7;
+      break;
+    case 300: // Deaf
+      firstLastMultiplier = 2;
+      break;
+  }
+});
+
 slowerBtn.addEventListener("click", () => {
   displaySpeed += 100;
   alert("Speed: " + displaySpeed + "ms per letter");
