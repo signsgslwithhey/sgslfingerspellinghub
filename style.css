@@ -10,15 +10,18 @@ html, body {
 
 h1 {
   color: #f1c40f;
+  background: #1a1a1a; /* solid background */
+  padding: 10px;
 }
 
 #settings, #buttons, footer {
-  background: transparent !important;
+  background: #1a1a1a !important; /* solid, no transparent */
 }
 
 label {
   margin: 0 10px;
   font-weight: bold;
+  background: #1a1a1a;
 }
 
 select, #wordInput {
@@ -54,7 +57,7 @@ button:hover {
   align-items: center;
   width: 420px;
   height: 420px;
-  background: #1a1a1a; /* same as page */
+  background: #1a1a1a; /* solid background */
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
@@ -73,10 +76,14 @@ button:hover {
 #score {
   font-weight: bold;
   color: #2ecc71;
+  background: #1a1a1a;
+  padding: 5px;
 }
 
 footer {
   margin-top: 40px;
   font-size: 0.9em;
   color: #999;
+  background: #1a1a1a;
+  padding: 10px;
 }
