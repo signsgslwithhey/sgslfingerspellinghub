@@ -1,7 +1,7 @@
 // words.js is loaded separately and provides `wordList`
 
 let currentWord = "";
-let displaySpeed = 1000; // default speed in ms
+let displaySpeed = 1000;
 let score = 0;
 
 // Elements
@@ -16,50 +16,62 @@ const scoreDisplay = document.getElementById("score");
 const wordInput = document.getElementById("wordInput");
 const checkBtn = document.getElementById("checkBtn");
 
-// Show fingerspelling images (with double-letter support, blank at start/end)
-function showLetterSequence(word) {
-  let index = -1; // start with blank.png before word
-  outputDiv.innerHTML = "";
-  const img = document.createElement("img");
-  img.style.width = "500px";
-  img.style.height = "500px";
-  img.style.background = "#0f0f0f";
-  outputDiv.appendChild(img);
-
-  // Minimum display duration to smooth speed
-  const minDisplayDuration = 400;
-  const speed = Math.max(displaySpeed, minDisplayDuration);
-
-  function showNext() {
-    if (index === -1) {
-      // show blank before word starts
-      img.src = `images/blank.png`;
-      index++;
-    } else if (index < word.length) {
-      const char = word[index];
-      const lower = char.toLowerCase();
-
-      // double-letter logic: if current letter same as previous, show double letter image
-      if (index > 0 && word[index] === word[index - 1]) {
-        img.src = `images/${lower}${lower}.png`;
-      } else {
-        img.src = `images/${lower}.png`;
-      }
-      index++;
-    } else if (index === word.length) {
-      // show blank after word ends
-      img.src = `images/blank.png`;
-      index++;
-    } else {
-      // done
-      return;
-    }
-    setTimeout(showNext, speed);
-  }
-  showNext();
+// Helper: load image and wait till loaded
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = src;
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error("Failed to load image: " + src));
+  });
 }
 
-// Get random word from wordList filtered by max letters
+// Async show letters one by one, waiting for image load & displaySpeed
+async function showLetterSequence(word) {
+  outputDiv.innerHTML = ""; // clear output
+
+  for (let i = 0; i < word.length; i++) {
+    let char = word[i];
+    const lower = char.toLowerCase();
+
+    // Double letter logic
+    let imgSrc;
+    if (i > 0 && word[i] === word[i - 1]) {
+      imgSrc = `images/${lower}${lower}.png`;
+    } else {
+      imgSrc = `images/${lower}.png`;
+    }
+
+    try {
+      const img = await loadImage(imgSrc);
+      img.style.height = "500px";
+      img.style.margin = "20px 0";
+      img.style.borderRadius = "0px";
+      img.style.backgroundColor = "#0f0f0f";
+
+      outputDiv.innerHTML = ""; // clear previous
+      outputDiv.appendChild(img);
+
+      await new Promise(r => setTimeout(r, displaySpeed));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // Show blank.png at the end
+  try {
+    const blankImg = await loadImage("images/blank.png");
+    blankImg.style.height = "500px";
+    blankImg.style.margin = "20px 0";
+    blankImg.style.backgroundColor = "#0f0f0f";
+    outputDiv.innerHTML = "";
+    outputDiv.appendChild(blankImg);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Get random word filtered by max letters
 function getRandomWord() {
   const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
   let filtered = wordList;
@@ -69,19 +81,19 @@ function getRandomWord() {
   return filtered[Math.floor(Math.random() * filtered.length)];
 }
 
-// New word button click: reset input and start animation
+// New word - resets input and shows animation
 function newWord() {
   currentWord = getRandomWord();
   wordInput.value = "";
   showLetterSequence(currentWord);
 }
 
-// Replay button click: replay current word
+// Replay current word animation
 function replayWord() {
   if (currentWord) showLetterSequence(currentWord);
 }
 
-// Check answer button: compare user input to currentWord
+// Check answer and update score
 checkBtn.addEventListener("click", function () {
   const userAnswer = wordInput.value.toUpperCase().trim();
   if (userAnswer === currentWord) {
@@ -95,7 +107,9 @@ checkBtn.addEventListener("click", function () {
 });
 
 // Speed controls
-speedSelect.addEventListener("change", () => displaySpeed = parseInt(speedSelect.value));
+speedSelect.addEventListener("change", () => {
+  displaySpeed = parseInt(speedSelect.value);
+});
 slowerBtn.addEventListener("click", () => {
   displaySpeed += 100;
   alert("Speed: " + displaySpeed + "ms per letter");
@@ -109,5 +123,5 @@ fasterBtn.addEventListener("click", () => {
 newWordBtn.addEventListener("click", newWord);
 replayBtn.addEventListener("click", replayWord);
 
-// Start the first word when page loads
+// Start with first word
 newWord();
