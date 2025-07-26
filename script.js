@@ -19,8 +19,11 @@ const checkBtn = document.getElementById("checkBtn");
 // ✅ Show fingerspelling images (with double-letter support)
 function showLetterSequence(word) {
   let index = 0;
-  outputDiv.innerHTML = ""; // clear output
+  outputDiv.innerHTML = ""; // clear first
   const img = document.createElement("img");
+  img.style.width = "500px";
+  img.style.height = "500px";
+  img.style.background = "#1a1a1a";
   outputDiv.appendChild(img);
 
   const interval = setInterval(() => {
@@ -28,24 +31,27 @@ function showLetterSequence(word) {
       const char = word[index];
       const lower = char.toLowerCase();
 
-      // Show double-letter image if current letter is same as previous
+      // ✅ Double-letter logic
       if (index > 0 && word[index] === word[index - 1]) {
         img.src = `images/${lower}${lower}.png`; // e.g., ll.png
       } else {
         img.src = `images/${lower}.png`;
       }
 
+      img.style.background = "#1a1a1a"; // ensure same dark background
       index++;
     } else {
-      // End of sequence: clear image and stop interval
-      img.src = "";
-      img.style.background = "#000";
+      // ✅ End of word → show solid dark background (same size as images)
+      img.removeAttribute("src");
+      img.style.width = "500px";
+      img.style.height = "500px";
+      img.style.background = "#1a1a1a";
       clearInterval(interval);
     }
   }, displaySpeed);
 }
 
-// ✅ Get random word based on max letters filter
+// ✅ Get random word
 function getRandomWord() {
   const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
   let filtered = wordList;
@@ -55,19 +61,19 @@ function getRandomWord() {
   return filtered[Math.floor(Math.random() * filtered.length)];
 }
 
-// ✅ Load a new word and show it
+// ✅ New word
 function newWord() {
   currentWord = getRandomWord();
   wordInput.value = "";
   showLetterSequence(currentWord);
 }
 
-// ✅ Replay current word
+// ✅ Replay
 function replayWord() {
   if (currentWord) showLetterSequence(currentWord);
 }
 
-// ✅ Check user input against current word
+// ✅ Check answer
 checkBtn.addEventListener("click", function () {
   const userAnswer = wordInput.value.toUpperCase().trim();
   if (userAnswer === currentWord) {
@@ -91,9 +97,9 @@ fasterBtn.addEventListener("click", () => {
   alert("Speed: " + displaySpeed + "ms per letter");
 });
 
-// ✅ Button event listeners
+// ✅ Button events
 newWordBtn.addEventListener("click", newWord);
 replayBtn.addEventListener("click", replayWord);
 
-// ✅ Start with first word
+// ✅ Start first word
 newWord();
