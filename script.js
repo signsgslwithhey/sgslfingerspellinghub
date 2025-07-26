@@ -1,17 +1,11 @@
-// words.js (Example - replace with full 10,000 words)
-const wordList = [
-  "CAT","DOG","HOUSE","APPLE","PIZZA","BALL","LOVE","HAPPY","TEACH","SCHOOL",
-  "THANK","FRIEND","WATER","PHONE","DEAF","SIGN","HELLO","CHAIR","LIGHT",
-  "EAT","SLEEP","RUN","WORK","READ","WRITE","BIRD","MOUSE","PAPER","TABLE"
-  // ... (add up to 10,000 words in CAPS)
-];
+// words.js is loaded separately and provides `wordList`
 
 let currentWord = "";
 let displaySpeed = 1000;
 let score = 0;
 
 // Elements
-const output = document.getElementById("output");
+const outputDiv = document.getElementById("output");
 const newWordBtn = document.getElementById("newWordBtn");
 const replayBtn = document.getElementById("replayBtn");
 const speedSelect = document.getElementById("speedSelect");
@@ -51,9 +45,6 @@ function showLetterSequence(word) {
   }, displaySpeed);
 }
 
-  showNext();
-}
-
 // ✅ Get random word
 function getRandomWord() {
   const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
@@ -68,12 +59,12 @@ function getRandomWord() {
 function newWord() {
   currentWord = getRandomWord();
   wordInput.value = "";
-  showWordAnimated(currentWord);
+  showLetterSequence(currentWord);
 }
 
 // ✅ Replay
 function replayWord() {
-  if (currentWord) showWordAnimated(currentWord);
+  if (currentWord) showLetterSequence(currentWord);
 }
 
 // ✅ Check answer
