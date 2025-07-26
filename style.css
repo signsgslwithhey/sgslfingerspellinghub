@@ -56,12 +56,13 @@ button:hover {
   background: transparent;
 }
 
-#output {
-  background: #1a1a1a; /* same as page background */
-  width: 420px;  /* optional fixed size to avoid shrinking */
-  height: 420px;
-  margin: auto;
+#output img {
+  height: 400px; 
+  margin: 10px;
   border-radius: 10px;
+  background: #111;
+  padding: 10px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.3);
 }
 
 #score {
