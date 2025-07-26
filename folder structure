@@ -5,6 +5,7 @@ sgsl-fingerspelling/
 ├── script.js
 ├── words.js
 └── images/
+    ├── blank.png
     ├── a.png
     ├── aa.png
     ├── b.png
