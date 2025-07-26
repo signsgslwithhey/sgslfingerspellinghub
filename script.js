@@ -36,12 +36,14 @@ function showLetterSequence(word) {
       }
 
       index++;
-    } else {
-      // End of sequence: clear image and stop interval
-      img.src = "";
-      img.style.background = "#000";
-      clearInterval(interval);
-    }
+} else {
+  // ✅ End of word → show black placeholder same size as image
+  img.src = "";
+  img.style.width = "400px";  // same width as your images
+  img.style.height = "400px"; // same height as your images
+  img.style.background = "#000";
+  clearInterval(interval);
+}
   }, displaySpeed);
 }
 
