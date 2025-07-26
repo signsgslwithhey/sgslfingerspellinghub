@@ -4,9 +4,6 @@ let currentWord = "";
 let displaySpeed = 1000;
 let score = 0;
 
-// Multiplier for first/last letter based on speed
-let firstLastMultiplier = 1.5; // default for medium
-
 // Elements
 const outputDiv = document.getElementById("output");
 const newWordBtn = document.getElementById("newWordBtn");
@@ -19,64 +16,63 @@ const scoreDisplay = document.getElementById("score");
 const wordInput = document.getElementById("wordInput");
 const checkBtn = document.getElementById("checkBtn");
 
-// ✅ Preload images before showing
-function loadImage(src) {
-  return new Promise((resolve, reject) => {
+// ✅ Preload all images to avoid delay on first play
+function preloadImages() {
+  const letters = "abcdefghijklmnopqrstuvwxyz";
+  const imagesToLoad = [];
+
+  // Single letters
+  for (let char of letters) {
+    imagesToLoad.push(`images/${char}.png`);
+  }
+  // Double letters
+  for (let char of letters) {
+    imagesToLoad.push(`images/${char}${char}.png`);
+  }
+  // Blank screen
+  imagesToLoad.push("images/blank.png");
+
+  imagesToLoad.forEach(src => {
     const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(`Image failed: ${src}`);
     img.src = src;
   });
+
+  console.log("✅ All images are preloading...");
 }
 
-// ✅ Show fingerspelling images (with double-letter & first/last multipliers)
-async function showLetterSequence(word) {
-  outputDiv.innerHTML = ""; // clear output
+// ✅ Show fingerspelling images (with double-letter support + blank before & after)
+function showLetterSequence(word) {
+  let index = -1; // Start with -1 to show blank first
+  outputDiv.innerHTML = "";
+  const img = document.createElement("img");
+  img.src = "images/blank.png"; // Start blank
+  outputDiv.appendChild(img);
 
-  for (let i = 0; i < word.length; i++) {
-    let char = word[i];
-    const lower = char.toLowerCase();
-
-    // Double-letter logic
-    let imgSrc;
-    if (i > 0 && word[i] === word[i - 1]) {
-      imgSrc = `images/${lower}${lower}.png`;
-    } else {
-      imgSrc = `images/${lower}.png`;
+  const interval = setInterval(() => {
+    if (index === -1) {
+      // First blank already shown, move to first letter
+      index++;
+      return;
     }
 
-    try {
-      const img = await loadImage(imgSrc);
-      img.style.height = "350px";
-      img.style.margin = "20px 0";
-      img.style.borderRadius = "0px";
-      img.style.backgroundColor = "#0f0f0f";
+    if (index < word.length) {
+      const char = word[index];
+      const lower = char.toLowerCase();
 
-      outputDiv.innerHTML = ""; // clear previous
-      outputDiv.appendChild(img);
-
-      // ✅ Adjust timing for first and last letters based on selected speed
-      if (i === 0 || i === word.length - 1) {
-        await new Promise(r => setTimeout(r, displaySpeed * firstLastMultiplier));
+      // ✅ Double-letter logic
+      if (index > 0 && word[index] === word[index - 1]) {
+        img.src = `images/${lower}${lower}.png`; // e.g., ll.png
       } else {
-        await new Promise(r => setTimeout(r, displaySpeed));
+        img.src = `images/${lower}.png`;
       }
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
-  // ✅ Show blank.png at the end
-  try {
-    const blankImg = await loadImage("images/blank.png");
-    blankImg.style.height = "350px";
-    blankImg.style.margin = "20px 0";
-    blankImg.style.backgroundColor = "#0f0f0f";
-    outputDiv.innerHTML = "";
-    outputDiv.appendChild(blankImg);
-  } catch (error) {
-    console.error(error);
-  }
+      index++;
+    } else {
+      // ✅ End of word → show blank at the end
+      img.src = "images/blank.png";
+      clearInterval(interval);
+    }
+  }, displaySpeed);
 }
 
 // ✅ Get random word
@@ -115,26 +111,7 @@ checkBtn.addEventListener("click", function () {
 });
 
 // ✅ Speed controls
-speedSelect.addEventListener("change", () => {
-  displaySpeed = parseInt(speedSelect.value);
-
-  // Adjust multipliers based on selected option
-  switch (displaySpeed) {
-    case 1500: // Slow
-      firstLastMultiplier = 1;
-      break;
-    case 1000: // Medium
-      firstLastMultiplier = 1.5;
-      break;
-    case 600: // Fast
-      firstLastMultiplier = 1.7;
-      break;
-    case 300: // Deaf
-      firstLastMultiplier = 3;
-      break;
-  }
-});
-
+speedSelect.addEventListener("change", () => displaySpeed = parseInt(speedSelect.value));
 slowerBtn.addEventListener("click", () => {
   displaySpeed += 100;
   alert("Speed: " + displaySpeed + "ms per letter");
@@ -147,6 +124,9 @@ fasterBtn.addEventListener("click", () => {
 // ✅ Button events
 newWordBtn.addEventListener("click", newWord);
 replayBtn.addEventListener("click", replayWord);
+
+// ✅ Preload all images as soon as page loads
+preloadImages();
 
 // ✅ Start first word
 newWord();
