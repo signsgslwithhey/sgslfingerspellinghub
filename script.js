@@ -28,16 +28,16 @@ function showLetterSequence(word) {
       const char = word[index];
       const lower = char.toLowerCase();
 
-      // ✅ Double-letter logic
+      // ✅ Correct double-letter logic
       if (index > 0 && word[index] === word[index - 1]) {
+        img.src = `images/${lower}${lower}.png`; // e.g., ll.png
+      } else {
         img.src = `images/${lower}.png`;
-        img.src = `images/${lower}${lower}.png`; // for double letters
       }
 
       index++;
     } else {
-      // ✅ End of word → blank/black screen
-      img.src = "";
+      img.src = ""; // blank at end
       img.style.background = "#000";
       clearInterval(interval);
     }
