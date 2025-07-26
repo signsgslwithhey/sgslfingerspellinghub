@@ -130,7 +130,7 @@ speedSelect.addEventListener("change", () => {
       firstLastMultiplier = 1.7;
       break;
     case 300: // Deaf
-      firstLastMultiplier = 2;
+      firstLastMultiplier = 3;
       break;
   }
 });
