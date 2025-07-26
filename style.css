@@ -2,7 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: #1a1a1a !important;
+  background: #0f0f0f !important;
   color: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
@@ -54,7 +54,7 @@ button:hover {
   align-items: center;
   width: 420px;
   height: 420px;
-  background: #1a1a1a; /* same as page */
+  background: #0f0f0f; /* same as page */
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
@@ -63,7 +63,7 @@ button:hover {
 #output img {
   width: 500px;
   height: 500px;
-  background: #1a1a1a; /* same as page */
+  background: #0f0f0f; /* same as page */
   margin: 5px;
   border-radius: 5px;
   padding: 5px;
