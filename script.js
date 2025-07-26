@@ -37,11 +37,9 @@ function showLetterSequence(word) {
 
       index++;
 } else {
-  // ✅ End of word → show black placeholder same size as image
-  img.src = "";
-  img.style.width = "400px";  // same width as your images
-  img.style.height = "400px"; // same height as your images
-  img.style.background = "#1a1a1a";
+  // ✅ End of word → hide the image and show blank background
+  img.style.display = "none"; // hide the <img>
+  outputDiv.style.background = "#1a1a1a"; // ensure output background stays
   clearInterval(interval);
 }
   }, displaySpeed);
