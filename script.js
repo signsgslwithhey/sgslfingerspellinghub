@@ -37,22 +37,21 @@ function preloadImages() {
     img.src = src;
   });
 
-  console.log("✅ All images are preloading...");
+  console.log("✅ All images preloading...");
 }
 
-// ✅ Show fingerspelling images (with double-letter support + blank before & after)
+// ✅ Show fingerspelling images (with double-letter support + slowed first & last letters)
 function showLetterSequence(word) {
-  let index = -1; // Start with -1 to show blank first
+  let index = -1; // Start with blank
   outputDiv.innerHTML = "";
   const img = document.createElement("img");
-  img.src = "images/blank.png"; // Start blank
+  img.src = "images/blank.png"; // Start with blank screen
   outputDiv.appendChild(img);
 
   const interval = setInterval(() => {
     if (index === -1) {
-      // First blank already shown, move to first letter
       index++;
-      return;
+      return; // just show blank once before starting
     }
 
     if (index < word.length) {
@@ -61,18 +60,65 @@ function showLetterSequence(word) {
 
       // ✅ Double-letter logic
       if (index > 0 && word[index] === word[index - 1]) {
-        img.src = `images/${lower}${lower}.png`; // e.g., ll.png
+        img.src = `images/${lower}${lower}.png`;
       } else {
         img.src = `images/${lower}.png`;
       }
 
-      index++;
+      // ✅ Adjust timing for first & last letters
+      let extraDelay = 0;
+      if (index === 0 || index === word.length - 1) {
+        extraDelay = getExtraDelay(); // function below decides based on speed
+      }
+
+      clearInterval(interval); // stop current interval
+      setTimeout(() => {
+        index++;
+        if (index <= word.length) {
+          showNextLetter(word, img, index); // recursive show
+        }
+      }, displaySpeed + extraDelay);
     } else {
-      // ✅ End of word → show blank at the end
-      img.src = "images/blank.png";
+      img.src = "images/blank.png"; // End of word → blank
       clearInterval(interval);
     }
   }, displaySpeed);
+}
+
+// ✅ Recursive helper for smoother timing
+function showNextLetter(word, img, index) {
+  if (index < word.length) {
+    const char = word[index];
+    const lower = char.toLowerCase();
+
+    if (index > 0 && word[index] === word[index - 1]) {
+      img.src = `images/${lower}${lower}.png`;
+    } else {
+      img.src = `images/${lower}.png`;
+    }
+
+    let extraDelay = 0;
+    if (index === 0 || index === word.length - 1) {
+      extraDelay = getExtraDelay();
+    }
+
+    setTimeout(() => {
+      showNextLetter(word, img, index + 1);
+    }, displaySpeed + extraDelay);
+  } else {
+    img.src = "images/blank.png"; // End → blank
+  }
+}
+
+// ✅ Decide extra delay based on speed selection
+function getExtraDelay() {
+  switch (speedSelect.value) {
+    case "1500": return 0; // Slow → no extra
+    case "1000": return displaySpeed * 1.5; // Medium → 1.5x
+    case "600": return displaySpeed * 1.7; // Fast → 1.7x
+    case "300": return displaySpeed * 4;   // Deaf → 2x
+    default: return 0;
+  }
 }
 
 // ✅ Get random word
