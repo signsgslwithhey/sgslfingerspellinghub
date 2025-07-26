@@ -2,7 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: #1a1a1a !important;
+  background: #1a1a1a !important; /* Force background */
   color: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
@@ -10,18 +10,15 @@ html, body {
 
 h1 {
   color: #f1c40f;
-  background: #1a1a1a; /* solid background */
-  padding: 10px;
 }
 
 #settings, #buttons, footer {
-  background: #1a1a1a !important; /* solid, no transparent */
+  background: transparent !important; /* No white blocks */
 }
 
 label {
   margin: 0 10px;
   font-weight: bold;
-  background: #1a1a1a;
 }
 
 select, #wordInput {
@@ -53,22 +50,17 @@ button:hover {
 #output {
   margin-top: 20px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  width: 420px;
-  height: 420px;
-  background: #1a1a1a; /* solid background */
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 10px;
+  min-height: 120px;
+  background: transparent;
 }
 
 #output img {
-  width: 400px;
-  height: 400px;
-  background: #1a1a1a; /* same as page */
+  height: 500px; 
   margin: 10px;
   border-radius: 10px;
+  background: #111;
   padding: 10px;
   box-shadow: 0 0 15px rgba(255,255,255,0.3);
 }
@@ -76,14 +68,10 @@ button:hover {
 #score {
   font-weight: bold;
   color: #2ecc71;
-  background: #1a1a1a;
-  padding: 5px;
 }
 
 footer {
   margin-top: 40px;
   font-size: 0.9em;
   color: #999;
-  background: #1a1a1a;
-  padding: 10px;
 }
