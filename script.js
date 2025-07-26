@@ -41,7 +41,7 @@ function showLetterSequence(word) {
   img.src = "";
   img.style.width = "400px";  // same width as your images
   img.style.height = "400px"; // same height as your images
-  img.style.background = "#111";
+  img.style.background = "#1a1a1a";
   clearInterval(interval);
 }
   }, displaySpeed);
