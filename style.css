@@ -2,7 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: #1a1a1a !important; /* solid dark background */
+  background: #1a1a1a !important;
   color: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
@@ -10,17 +10,15 @@ html, body {
 
 h1 {
   color: #f1c40f;
-  background: #1a1a1a;
 }
 
 #settings, #buttons, footer {
-  background: #1a1a1a !important; /* solid, no transparent */
+  background: transparent !important;
 }
 
 label {
   margin: 0 10px;
   font-weight: bold;
-  background: #1a1a1a;
 }
 
 select, #wordInput {
@@ -54,31 +52,31 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 520px; 
-  height: 520px; 
-  background: #1a1a1a; /* solid dark background */
+  width: 420px;
+  height: 420px;
+  background: #1a1a1a; /* same as page */
   margin-left: auto;
   margin-right: auto;
+  border-radius: 10px;
 }
 
 #output img {
-  width: 500px;
-  height: 500px;
-  background: #1a1a1a; /* matches page */
-  margin: 2px;
-  border-radius: 2px;
-  padding: 0px;
+  width: 400px;
+  height: 400px;
+  background: #1a1a1a; /* same as page */
+  margin: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.3);
 }
 
 #score {
   font-weight: bold;
   color: #2ecc71;
-  background: #1a1a1a;
 }
 
 footer {
   margin-top: 40px;
   font-size: 0.9em;
   color: #999;
-  background: #1a1a1a;
 }
