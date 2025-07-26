@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SgSL Fingerspelling Hub</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>SgSL Fingerspelling Hub</h1>
@@ -21,6 +21,7 @@
       <option value="8">8</option>
       <option value="9">9</option>
       <option value="10">10</option>
+      <option value="11">11</option>
       <option value="any" selected>Any</option>
     </select>
 
@@ -47,19 +48,19 @@
 
   <!-- Answer Input -->
   <p>Type your answer here:</p>
-  <input type="text" id="wordInput" placeholder="TYPE IN CAPITAL">
+  <input type="text" id="wordInput" placeholder="TYPE IN CAPITAL" />
   <button id="checkBtn">Check</button>
 
   <!-- Score -->
   <p>Your score: <span id="score">0</span></p>
 
   <footer>
-    <p>Created for SgSL learners | Inspired by 
+    <p>
+      Created for SgSL learners | Inspired by
       <a href="https://asl.ms/" target="_blank">ASL.ms</a>
     </p>
   </footer>
 
-  <!-- ✅ MUST load words.js before script.js -->
   <script src="words.js"></script>
   <script src="script.js"></script>
 </body>
