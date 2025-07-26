@@ -44,7 +44,7 @@ async function showLetterSequence(word) {
 
     try {
       const img = await loadImage(imgSrc);
-      img.style.height = "500px";
+      img.style.height = "400px";
       img.style.margin = "20px 0";
       img.style.borderRadius = "0px";
       img.style.backgroundColor = "#0f0f0f";
@@ -61,7 +61,7 @@ async function showLetterSequence(word) {
   // Show blank.png at the end
   try {
     const blankImg = await loadImage("images/blank.png");
-    blankImg.style.height = "500px";
+    blankImg.style.height = "400px";
     blankImg.style.margin = "20px 0";
     blankImg.style.backgroundColor = "#0f0f0f";
     outputDiv.innerHTML = "";
