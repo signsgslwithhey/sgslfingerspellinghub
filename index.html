@@ -11,7 +11,7 @@
 
   <!-- Settings -->
   <div id="settings">
-    <label>Number of letters:</label>
+    <label for="maxLetters">Number of letters:</label>
     <select id="maxLetters">
       <option value="3">3</option>
       <option value="4">4</option>
@@ -25,10 +25,10 @@
       <option value="any" selected>Any</option>
     </select>
 
-    <label>Set your speed:</label>
+    <label for="speedSelect">Set your speed:</label>
     <select id="speedSelect">
       <option value="1200">Slow</option>
-      <option value="900" selected>Medium</option>
+      <option value="800" selected>Medium</option>
       <option value="600">Fast</option>
       <option value="250">Deaf</option>
     </select>
@@ -48,7 +48,7 @@
 
   <!-- Answer Input -->
   <p>Type your answer here:</p>
-  <input type="text" id="wordInput" placeholder="TYPE IN CAPITAL" />
+  <input type="text" id="wordInput" placeholder="TYPE IN CAPITAL" autocomplete="off" />
   <button id="checkBtn">Check</button>
 
   <!-- Score -->
@@ -57,10 +57,11 @@
   <footer>
     <p>
       Created for SgSL learners | Inspired by
-      <a href="https://asl.ms/" target="_blank">ASL.ms</a>
+      <a href="https://asl.ms/" target="_blank" rel="noopener noreferrer">ASL.ms</a>
     </p>
   </footer>
 
+  <!-- Scripts -->
   <script src="words.js"></script>
   <script src="script.js"></script>
 </body>
