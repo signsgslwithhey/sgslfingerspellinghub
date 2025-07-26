@@ -48,7 +48,7 @@ button:hover {
 }
 
 #output {
-  margin: 40px 0 40px 0; /* add top and bottom margin */
+  margin: 30px 0 30px 0; /* add top and bottom margin */
   display: flex;
   justify-content: center;
   min-height: 120px;
