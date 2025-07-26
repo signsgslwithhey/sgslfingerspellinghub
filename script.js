@@ -39,7 +39,7 @@ function showLetterSequence(word) {
     } else {
       // End of sequence: clear image and stop interval
       img.src = "";
-      img.style.background = "#000";
+      img.style.background = "#0f0f0f";
       clearInterval(interval);
     }
   }, displaySpeed);
