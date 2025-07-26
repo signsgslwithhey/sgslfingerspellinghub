@@ -113,8 +113,8 @@ function showNextLetter(word, img, index) {
 // ✅ Decide extra delay based on speed selection
 function getExtraDelay() {
   switch (speedSelect.value) {
-    case "450": return 0; // Slow → no extra
-    case "350": return displaySpeed * 1.5; // Medium → 1.5x
+    case "600": return 0; // Slow → no extra
+    case "400": return displaySpeed * 1.5; // Medium → 1.5x
     case "250": return displaySpeed * 1.7; // Fast → 1.7x
     case "125": return displaySpeed * 4;   // Deaf → 2x
     default: return 0;
