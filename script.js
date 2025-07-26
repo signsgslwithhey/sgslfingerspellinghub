@@ -30,9 +30,8 @@ function showLetterSequence(word) {
 
       // ✅ Double-letter logic
       if (index > 0 && word[index] === word[index - 1]) {
-        img.src = `images/${lower}${lower}.png`; // e.g., ll.png
-      } else {
         img.src = `images/${lower}.png`;
+        img.src = `images/${lower}${lower}.png`; // for double letters
       }
 
       index++;
