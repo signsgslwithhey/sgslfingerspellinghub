@@ -48,17 +48,17 @@ button:hover {
 }
 
 #output {
-  margin-top: 20px;
+  margin: 40px 0 40px 0; /* add top and bottom margin */
   display: flex;
   justify-content: center;
   min-height: 120px;
-  background: #0f0f0f; /* match background */
+  background: #0f0f0f;
 }
 
 #output img {
   height: 500px;
   width: 500px;
-  margin: 0px;
+  margin: 0;
   border-radius: 0;
   background: #0f0f0f;
   padding: 10px;
