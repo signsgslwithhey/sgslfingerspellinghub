@@ -36,12 +36,12 @@ function showLetterSequence(word) {
       }
 
       index++;
-} else {
-  // ✅ End of word → hide the image and show blank background
-  img.style.display = "none"; // hide the <img>
-  outputDiv.style.background = "#1a1a1a"; // ensure output background stays
-  clearInterval(interval);
-}
+    } else {
+      // End of sequence: clear image and stop interval
+      img.src = "";
+      img.style.background = "#1a1a1a";
+      clearInterval(interval);
+    }
   }, displaySpeed);
 }
 
