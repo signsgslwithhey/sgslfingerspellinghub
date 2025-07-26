@@ -19,11 +19,8 @@ const checkBtn = document.getElementById("checkBtn");
 // ✅ Show fingerspelling images (with double-letter support)
 function showLetterSequence(word) {
   let index = 0;
-  outputDiv.innerHTML = ""; // clear first
+  outputDiv.innerHTML = ""; // clear output
   const img = document.createElement("img");
-  img.style.width = "400px";
-  img.style.height = "400px";
-  img.style.background = "#1a1a1a"; // match page background
   outputDiv.appendChild(img);
 
   const interval = setInterval(() => {
@@ -31,48 +28,46 @@ function showLetterSequence(word) {
       const char = word[index];
       const lower = char.toLowerCase();
 
-      // ✅ Double-letter logic (e.g., LL → ll.png)
+      // Show double-letter image if current letter is same as previous
       if (index > 0 && word[index] === word[index - 1]) {
-        img.src = `images/${lower}${lower}.png`;
+        img.src = `images/${lower}${lower}.png`; // e.g., ll.png
       } else {
         img.src = `images/${lower}.png`;
       }
 
       index++;
     } else {
-      // ✅ End of word → transparent 1x1 GIF to avoid broken image icon
-      img.src =
-        "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-      img.style.background = "#1a1a1a"; // keep same background color
+      // End of sequence: clear image and stop interval
+      img.src = "";
+      img.style.background = "#000";
       clearInterval(interval);
     }
   }, displaySpeed);
 }
 
-// ✅ Get random word
+// ✅ Get random word based on max letters filter
 function getRandomWord() {
-  const filterLength =
-    maxLetters.value === "any" ? null : parseInt(maxLetters.value);
+  const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
   let filtered = wordList;
   if (filterLength) {
-    filtered = wordList.filter((word) => word.length <= filterLength);
+    filtered = wordList.filter(word => word.length <= filterLength);
   }
   return filtered[Math.floor(Math.random() * filtered.length)];
 }
 
-// ✅ New word
+// ✅ Load a new word and show it
 function newWord() {
   currentWord = getRandomWord();
   wordInput.value = "";
   showLetterSequence(currentWord);
 }
 
-// ✅ Replay
+// ✅ Replay current word
 function replayWord() {
   if (currentWord) showLetterSequence(currentWord);
 }
 
-// ✅ Check answer
+// ✅ Check user input against current word
 checkBtn.addEventListener("click", function () {
   const userAnswer = wordInput.value.toUpperCase().trim();
   if (userAnswer === currentWord) {
@@ -86,10 +81,7 @@ checkBtn.addEventListener("click", function () {
 });
 
 // ✅ Speed controls
-speedSelect.addEventListener(
-  "change",
-  () => (displaySpeed = parseInt(speedSelect.value))
-);
+speedSelect.addEventListener("change", () => displaySpeed = parseInt(speedSelect.value));
 slowerBtn.addEventListener("click", () => {
   displaySpeed += 100;
   alert("Speed: " + displaySpeed + "ms per letter");
@@ -99,9 +91,9 @@ fasterBtn.addEventListener("click", () => {
   alert("Speed: " + displaySpeed + "ms per letter");
 });
 
-// ✅ Button events
+// ✅ Button event listeners
 newWordBtn.addEventListener("click", newWord);
 replayBtn.addEventListener("click", replayWord);
 
-// ✅ Start first word
+// ✅ Start with first word
 newWord();
