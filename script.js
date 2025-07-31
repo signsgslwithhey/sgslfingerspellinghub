@@ -1,4 +1,4 @@
-// words.js is loaded separately and provides wordList
+// words.js is loaded separately and provides `wordList`
 
 let currentWord = "";
 let displaySpeed = 400;
@@ -18,16 +18,16 @@ const checkBtn = document.getElementById("checkBtn");
 
 // ✅ Preload all images to avoid delay on first play
 function preloadImages() {
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const letters = "abcdefghijklmnopqrstuvwxyz";
   const imagesToLoad = [];
 
   // Single letters
   for (let char of letters) {
-    imagesToLoad.push(images/${char}.png);
+    imagesToLoad.push(`images/${char}.png`);
   }
   // Double letters
   for (let char of letters) {
-    imagesToLoad.push(images/${char}${char}.png);
+    imagesToLoad.push(`images/${char}${char}.png`);
   }
   // Blank screen
   imagesToLoad.push("images/blank.png");
@@ -60,9 +60,9 @@ function showLetterSequence(word) {
 
       // ✅ Double-letter logic
       if (index > 0 && word[index] === word[index - 1]) {
-        img.src = images/${upper}${upper}.png;
+        img.src = `images/${upper}${upper}.png`;
       } else {
-        img.src = images/${upper}.png;
+        img.src = `images/${upper}.png`;
       }
 
       // ✅ Adjust timing for first & last letters
@@ -92,9 +92,9 @@ function showNextLetter(word, img, index) {
     const upper = char.toUpperCase();
 
     if (index > 0 && word[index] === word[index - 1]) {
-      img.src = images/${upper}${upper}.png;
+      img.src = `images/${upper}${upper}.png`;
     } else {
-      img.src = images/${upper}.png;
+      img.src = `images/${upper}.png`;
     }
 
     let extraDelay = 0;
@@ -116,7 +116,7 @@ function getExtraDelay() {
     case "600": return 0; // Slow → no extra
     case "400": return displaySpeed * 1.5; // Medium → 1.5x
     case "250": return displaySpeed * 1.7; // Fast → 1.7x
-    case "125": return displaySpeed * 4;   // Deaf → 4x
+    case "125": return displaySpeed * 4;   // Deaf → 2x
     default: return 0;
   }
 }
