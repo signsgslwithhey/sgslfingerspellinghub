@@ -125,9 +125,14 @@ function getExtraDelay() {
 function getRandomWord() {
   const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
   let filtered = wordList;
-  if (filterLength) {
-    filtered = wordList.filter(word => word.length <= filterLength);
+  
+  if (filterLength !== null) {
+    filtered = wordList.filter(word => word.length === filterLength);
   }
+
+  // fallback: if no words found, just use full list
+  if (filtered.length === 0) filtered = wordList;
+
   return filtered[Math.floor(Math.random() * filtered.length)];
 }
 
