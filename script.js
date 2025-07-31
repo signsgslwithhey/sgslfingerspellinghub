@@ -16,9 +16,9 @@ const scoreDisplay = document.getElementById("score");
 const wordInput = document.getElementById("wordInput");
 const checkBtn = document.getElementById("checkBtn");
 
-// ✅ Preload all images (a-z, aa-zz, blank)
+// ✅ Preload all images (A-Z, AA-ZZ, blank)
 function preloadImages() {
-  const letters = "abcdefghijklmnopqrstuvwxyz";
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const imagesToLoad = [];
 
   for (const char of letters) {
@@ -55,7 +55,7 @@ function showLetterSequence(word) {
     }
 
     if (index < word.length) {
-      const char = word[index].toLowerCase();
+      const char = word[index].toUpperCase();
 
       if (index > 0 && word[index] === word[index - 1]) {
         img.src = `images/${char}${char}.png`;
