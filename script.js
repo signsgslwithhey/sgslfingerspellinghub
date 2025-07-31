@@ -62,7 +62,7 @@ function showLetterSequence(word) {
       if (index > 0 && word[index] === word[index - 1]) {
         img.src = `images/${lower}${lower}.png`;
       } else {
-        img.src = `images/${lower}.png`;
+        img.src = `images/${char.toUpperCase()}.png`;
       }
 
       // ✅ Adjust timing for first & last letters
