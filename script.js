@@ -1,7 +1,7 @@
 // words.js is loaded separately and provides `wordList`
 
 let currentWord = "";
-let displaySpeed = 400;
+let displaySpeed = 1000;
 let score = 0;
 
 // Elements
