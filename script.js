@@ -117,16 +117,22 @@ function getExtraDelay() {
 
 // ✅ Get random word with exact length filter
 function getRandomWord() {
-  const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
-  let filtered = wordList;
-
-  if (filterLength !== null) {
-    filtered = wordList.filter(word => word.length === filterLength);
+  const selected = maxLetters.value;
+  if (selected === "any") {
+    // Flatten all words
+    const allWords = Object.values(wordListByLength).flat();
+    return allWords[Math.floor(Math.random() * allWords.length)];
   }
 
-  if (filtered.length === 0) filtered = wordList;
+  const length = parseInt(selected);
+  const words = wordListByLength[length] || [];
 
-  return filtered[Math.floor(Math.random() * filtered.length)];
+  if (words.length === 0) {
+    alert("No words available for this length.");
+    return "ERROR";
+  }
+
+  return words[Math.floor(Math.random() * words.length)];
 }
 
 // ✅ New word
