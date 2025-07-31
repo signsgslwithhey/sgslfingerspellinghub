@@ -21,15 +21,11 @@ function preloadImages() {
   const letters = "abcdefghijklmnopqrstuvwxyz";
   const imagesToLoad = [];
 
-  // Single letters
   for (let char of letters) {
     imagesToLoad.push(`images/${char}.png`);
-  }
-  // Double letters
-  for (let char of letters) {
     imagesToLoad.push(`images/${char}${char}.png`);
   }
-  // Blank screen
+
   imagesToLoad.push("images/blank.png");
 
   imagesToLoad.forEach(src => {
@@ -40,52 +36,50 @@ function preloadImages() {
   console.log("✅ All images preloading...");
 }
 
-// ✅ Show fingerspelling images (with double-letter support + slowed first & last letters)
+// ✅ Show fingerspelling images
 function showLetterSequence(word) {
-  let index = -1; // Start with blank
+  let index = -1;
   outputDiv.innerHTML = "";
   const img = document.createElement("img");
-  img.src = "images/blank.png"; // Start with blank screen
+  img.src = "images/blank.png";
   outputDiv.appendChild(img);
 
   const interval = setInterval(() => {
     if (index === -1) {
       index++;
-      return; // just show blank once before starting
+      return;
     }
 
     if (index < word.length) {
       const char = word[index];
       const upper = char.toUpperCase();
 
-      // ✅ Double-letter logic
       if (index > 0 && word[index] === word[index - 1]) {
         img.src = `images/${upper}${upper}.png`;
       } else {
         img.src = `images/${upper}.png`;
       }
 
-      // ✅ Adjust timing for first & last letters
       let extraDelay = 0;
       if (index === 0 || index === word.length - 1) {
-        extraDelay = getExtraDelay(); // function below decides based on speed
+        extraDelay = getExtraDelay();
       }
 
-      clearInterval(interval); // stop current interval
+      clearInterval(interval);
       setTimeout(() => {
         index++;
         if (index <= word.length) {
-          showNextLetter(word, img, index); // recursive show
+          showNextLetter(word, img, index);
         }
       }, displaySpeed + extraDelay);
     } else {
-      img.src = "images/blank.png"; // End of word → blank
+      img.src = "images/blank.png";
       clearInterval(interval);
     }
   }, displaySpeed);
 }
 
-// ✅ Recursive helper for smoother timing
+// ✅ Recursive smoother playback
 function showNextLetter(word, img, index) {
   if (index < word.length) {
     const char = word[index];
@@ -106,31 +100,30 @@ function showNextLetter(word, img, index) {
       showNextLetter(word, img, index + 1);
     }, displaySpeed + extraDelay);
   } else {
-    img.src = "images/blank.png"; // End → blank
+    img.src = "images/blank.png";
   }
 }
 
-// ✅ Decide extra delay based on speed selection
+// ✅ Extra delay for first and last letters
 function getExtraDelay() {
   switch (speedSelect.value) {
-    case "600": return 0; // Slow → no extra
-    case "400": return displaySpeed * 1.5; // Medium → 1.5x
-    case "250": return displaySpeed * 1.7; // Fast → 1.7x
-    case "125": return displaySpeed * 4;   // Deaf → 2x
+    case "600": return 0;
+    case "400": return displaySpeed * 1.5;
+    case "250": return displaySpeed * 1.7;
+    case "125": return displaySpeed * 4;
     default: return 0;
   }
 }
 
-// ✅ Get random word
+// ✅ Get random word with exact length filter
 function getRandomWord() {
   const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
   let filtered = wordList;
-  
+
   if (filterLength !== null) {
     filtered = wordList.filter(word => word.length === filterLength);
   }
 
-  // fallback: if no words found, just use full list
   if (filtered.length === 0) filtered = wordList;
 
   return filtered[Math.floor(Math.random() * filtered.length)];
@@ -143,12 +136,12 @@ function newWord() {
   showLetterSequence(currentWord);
 }
 
-// ✅ Replay
+// ✅ Replay word
 function replayWord() {
   if (currentWord) showLetterSequence(currentWord);
 }
 
-// ✅ Check answer
+// ✅ Check user answer
 checkBtn.addEventListener("click", function () {
   const userAnswer = wordInput.value.toUpperCase().trim();
   if (userAnswer === currentWord) {
@@ -172,12 +165,10 @@ fasterBtn.addEventListener("click", () => {
   alert("Speed: " + displaySpeed + "ms per letter");
 });
 
-// ✅ Button events
+// ✅ Button listeners
 newWordBtn.addEventListener("click", newWord);
 replayBtn.addEventListener("click", replayWord);
 
-// ✅ Preload all images as soon as page loads
+// ✅ Init
 preloadImages();
-
-// ✅ Start first word
 newWord();
