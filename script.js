@@ -56,7 +56,7 @@ function showLetterSequence(word) {
 
     if (index < word.length) {
       const char = word[index];
-      const lower = char.toLowerCase();
+      const upper = char.toUpperCase();
 
       // ✅ Double-letter logic
       if (index > 0 && word[index] === word[index - 1]) {
@@ -124,11 +124,18 @@ function getExtraDelay() {
 // ✅ Get random word
 function getRandomWord() {
   const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
-  let filtered = wordList;
+  let candidates = [];
+
   if (filterLength) {
-    filtered = wordList.filter(word => word.length <= filterLength);
+    candidates = wordListByLength[filterLength] || [];
+  } else {
+    // flatten all word arrays
+    for (const len in wordListByLength) {
+      candidates = candidates.concat(wordListByLength[len]);
+    }
   }
-  return filtered[Math.floor(Math.random() * filtered.length)];
+
+  return candidates[Math.floor(Math.random() * candidates.length)];
 }
 
 // ✅ New word
