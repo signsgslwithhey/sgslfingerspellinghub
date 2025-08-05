@@ -47,8 +47,13 @@ button:hover {
   background: #2980b9;
 }
 
+button:focus {
+  outline: 3px solid #f1c40f;
+  outline-offset: 2px;
+}
+
 #output {
-  margin: 20px 0;
+  margin: 20px 0 20px 0;
   display: flex;
   justify-content: center;
   min-height: 120px;
@@ -56,13 +61,16 @@ button:hover {
 }
 
 #output img {
-  height: 350px;
-  width: 350px;
+  height: auto;
+  width: auto;
+  max-width: 350px;
+  max-height: 350px;
   margin: 0;
   border-radius: 10px;
   background: #0f0f0f;
   padding: 10px;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  box-sizing: border-box;
 }
 
 #score {
@@ -74,4 +82,22 @@ footer {
   margin-top: 40px;
   font-size: 0.9em;
   color: #999;
+}
+
+/* Responsive tweaks for smaller screens */
+@media (max-width: 480px) {
+  #output img {
+    max-width: 90vw;
+    max-height: 90vh;
+    padding: 5px;
+  }
+
+  button, select, #wordInput {
+    font-size: 0.9em;
+    padding: 8px 16px;
+  }
+
+  label {
+    margin: 0 5px;
+  }
 }
