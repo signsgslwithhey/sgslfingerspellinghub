@@ -48,7 +48,7 @@ button:hover {
 }
 
 #output {
-  margin: 20px 0 20px 0; /* add top and bottom margin */
+  margin: 20px 0;
   display: flex;
   justify-content: center;
   min-height: 120px;
@@ -59,7 +59,7 @@ button:hover {
   height: 350px;
   width: 350px;
   margin: 0;
-  border-radius: 10px;
+  border-radius: 10;
   background: #0f0f0f;
   padding: 10px;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
