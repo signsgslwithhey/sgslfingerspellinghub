@@ -56,13 +56,13 @@ function showLetterSequence(word) {
 
     if (index < word.length) {
       const char = word[index];
-      const lower = char.toLowerCase();
+      const upper = char.toUpperCase();
 
       // ✅ Double-letter logic
       if (index > 0 && word[index] === word[index - 1]) {
-        img.src = `images/${lower}${lower}.png`;
+        img.src = `images/${Upper}${Upper}.png`;
       } else {
-        img.src = `images/${lower}.png`;
+        img.src = `images/${Upper}.png`;
       }
 
       // ✅ Adjust timing for first & last letters
@@ -89,12 +89,12 @@ function showLetterSequence(word) {
 function showNextLetter(word, img, index) {
   if (index < word.length) {
     const char = word[index];
-    const lower = char.toLowerCase();
+    const Upper = char.toUpperCase();
 
     if (index > 0 && word[index] === word[index - 1]) {
-      img.src = `images/${lower}${lower}.png`;
+      img.src = `images/${Upper}${Upper}.png`;
     } else {
-      img.src = `images/${lower}.png`;
+      img.src = `images/${Upper}.png`;
     }
 
     let extraDelay = 0;
