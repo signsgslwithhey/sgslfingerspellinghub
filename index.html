@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SgSL Fingerspelling Hub</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>SgSL Fingerspelling Hub</h1>
 
   <!-- Settings -->
   <div id="settings">
-    <label>Number of letters:</label>
+    <label for="maxLetters">Number of letters:</label>
     <select id="maxLetters">
       <option value="3">3</option>
       <option value="4">4</option>
@@ -24,7 +24,7 @@
       <option value="any" selected>Any</option>
     </select>
 
-    <label>Set your speed:</label>
+    <label for="speedSelect">Set your speed:</label>
     <select id="speedSelect">
       <option value="600">Slow</option>
       <option value="400" selected>Medium</option>
@@ -36,30 +36,31 @@
     <button id="fasterBtn">Faster</button>
   </div>
 
-  <!-- Buttons -->
+  <!-- Control Buttons -->
   <div id="buttons">
     <button id="newWordBtn">New Word</button>
     <button id="replayBtn">Replay</button>
   </div>
 
-  <!-- Output -->
+  <!-- Fingerspelling Output -->
   <div id="output"></div>
 
   <!-- Answer Input -->
   <p>Type your answer here:</p>
-  <input type="text" id="wordInput" placeholder="TYPE IN CAPITAL">
+  <input type="text" id="wordInput" placeholder="TYPE IN CAPITAL" />
   <button id="checkBtn">Check</button>
 
-  <!-- Score -->
+  <!-- Score Display -->
   <p>Your score: <span id="score">0</span></p>
 
   <footer>
-    <p>Created by HEY | Inspired by 
+    <p>
+      Created by HEY | Inspired by
       <a href="https://asl.ms/" target="_blank">ASL.ms</a>
     </p>
   </footer>
 
-  <!-- Load words and script -->
+  <!-- Scripts -->
   <script src="words.js"></script>
   <script src="script.js"></script>
 </body>
