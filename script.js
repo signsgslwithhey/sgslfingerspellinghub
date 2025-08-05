@@ -1,4 +1,4 @@
-// words.js is loaded separately and provides `wordList`
+// words.js is loaded separately and provides `wordListByLength`
 
 let currentWord = "";
 let displaySpeed = 400;
@@ -18,7 +18,7 @@ const checkBtn = document.getElementById("checkBtn");
 
 // ✅ Preload all images to avoid delay on first play
 function preloadImages() {
-  const letters = "abcdefghijklmnopqrstuvwxyz";
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const imagesToLoad = [];
 
   // Single letters
@@ -42,59 +42,23 @@ function preloadImages() {
 
 // ✅ Show fingerspelling images (with double-letter support + slowed first & last letters)
 function showLetterSequence(word) {
-  let index = -1; // Start with blank
   outputDiv.innerHTML = "";
   const img = document.createElement("img");
   img.src = "images/blank.png"; // Start with blank screen
   outputDiv.appendChild(img);
 
-  const interval = setInterval(() => {
-    if (index === -1) {
-      index++;
-      return; // just show blank once before starting
+  function showNext(index) {
+    if (index >= word.length) {
+      img.src = "images/blank.png"; // End with blank
+      return;
     }
 
-    if (index < word.length) {
-      const char = word[index];
-      const upper = char.toUpperCase();
-
-      // ✅ Double-letter logic
-      if (index > 0 && word[index] === word[index - 1]) {
-        img.src = `images/${upper}${upper}.png`;
-      } else {
-        img.src = `images/${upper}.png`;
-      }
-
-      // ✅ Adjust timing for first & last letters
-      let extraDelay = 0;
-      if (index === 0 || index === word.length - 1) {
-        extraDelay = getExtraDelay(); // function below decides based on speed
-      }
-
-      clearInterval(interval); // stop current interval
-      setTimeout(() => {
-        index++;
-        if (index <= word.length) {
-          showNextLetter(word, img, index); // recursive show
-        }
-      }, displaySpeed + extraDelay);
-    } else {
-      img.src = "images/blank.png"; // End of word → blank
-      clearInterval(interval);
-    }
-  }, displaySpeed);
-}
-
-// ✅ Recursive helper for smoother timing
-function showNextLetter(word, img, index) {
-  if (index < word.length) {
-    const char = word[index];
-    const upper = char.toUpperCase();
+    const char = word[index].toUpperCase();
 
     if (index > 0 && word[index] === word[index - 1]) {
-      img.src = `images/${upper}${upper}.png`;
+      img.src = `images/${char}${char}.png`;
     } else {
-      img.src = `images/${upper}.png`;
+      img.src = `images/${char}.png`;
     }
 
     let extraDelay = 0;
@@ -103,20 +67,23 @@ function showNextLetter(word, img, index) {
     }
 
     setTimeout(() => {
-      showNextLetter(word, img, index + 1);
+      showNext(index + 1);
     }, displaySpeed + extraDelay);
-  } else {
-    img.src = "images/blank.png"; // End → blank
   }
+
+  // Show a blank first for a short moment, then start showing letters
+  setTimeout(() => {
+    showNext(0);
+  }, displaySpeed);
 }
 
 // ✅ Decide extra delay based on speed selection
 function getExtraDelay() {
   switch (speedSelect.value) {
-    case "600": return 0; // Slow → no extra
-    case "400": return displaySpeed * 1.5; // Medium → 1.5x
-    case "250": return displaySpeed * 1.7; // Fast → 1.7x
-    case "125": return displaySpeed * 4;   // Deaf → 2x
+    case "600": return displaySpeed * 2;    // Slow → longer extra delay
+    case "400": return displaySpeed * 1.5;  // Medium → moderate extra delay
+    case "250": return displaySpeed * 1.2;  // Fast → shorter extra delay
+    case "125": return displaySpeed * 0.8;  // Deaf → minimal extra delay
     default: return 0;
   }
 }
@@ -164,11 +131,15 @@ checkBtn.addEventListener("click", function () {
 });
 
 // ✅ Speed controls
-speedSelect.addEventListener("change", () => displaySpeed = parseInt(speedSelect.value));
+speedSelect.addEventListener("change", () => {
+  displaySpeed = parseInt(speedSelect.value);
+});
+
 slowerBtn.addEventListener("click", () => {
   displaySpeed += 100;
   alert("Speed: " + displaySpeed + "ms per letter");
 });
+
 fasterBtn.addEventListener("click", () => {
   displaySpeed = Math.max(100, displaySpeed - 100);
   alert("Speed: " + displaySpeed + "ms per letter");
