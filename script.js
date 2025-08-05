@@ -80,10 +80,10 @@ function showLetterSequence(word) {
 // ✅ Decide extra delay based on speed selection
 function getExtraDelay() {
   switch (speedSelect.value) {
-    case "600": return displaySpeed * 2;    // Slow → longer extra delay
-    case "400": return displaySpeed * 1.5;  // Medium → moderate extra delay
-    case "250": return displaySpeed * 1.2;  // Fast → shorter extra delay
-    case "125": return displaySpeed * 0.8;  // Deaf → minimal extra delay
+    case "600": return displaySpeed * 0;    // Slow → minimal extra delay
+    case "400": return displaySpeed * 1.5;  // Medium → shorter extra delay
+    case "250": return displaySpeed * 1.7;  // Fast → moderate extra delay
+    case "125": return displaySpeed * 4;  // Deaf → longer extra delay
     default: return 0;
   }
 }
