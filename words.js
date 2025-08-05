@@ -1,4 +1,4 @@
-const wordListByLength = {
+const wordListByLength = [
   3: [
     "AGE", "ALL", "AMK", "ART", "ASK", "BAG", "BAO", "BED", "BEE", "BIG",
     "BUG", "BUS", "BUT", "BUY", "CAR", "CAT", "COW", "CPF", "CRY", "CUT",
@@ -118,4 +118,4 @@ const wordListByLength = {
   "FRIENDSHIP", "GIRLFRIEND", "GOVERNMENT", "HELICOPTER", "LEADERSHIP", "LITERATURE",
   "MACDONALDS", "MOTIVATION", "MOTORCYCLE", "PLAYGROUND", "POPULATION", "RESTAURANT",
   "STRAWBERRY", "TECHNOLOGY", "TELEVISION", "UNDERSTAND", "UNIVERSITY", "WATERMELON"
-};
+];
