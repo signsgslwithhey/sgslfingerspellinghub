@@ -16,7 +16,7 @@ const checkBtn = document.getElementById("checkBtn");
 
 // ✅ Preload images (single + double + blank)
 function preloadImages() {
-  const letters = "abcdefghijklmnopqrstuvwxyz";
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const imagesToLoad = [];
 
   for (let char of letters) {
