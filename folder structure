@@ -5,6 +5,7 @@ sgsl-fingerspelling/
 ├── script.js
 ├── words.js
 └── images/
+    ├── blank.png
     ├── A.png
     ├── AA.png
     ├── B.png
@@ -57,4 +58,3 @@ sgsl-fingerspelling/
     ├── YY.png
     ├── Z.png
     ├── ZZ.png
-    └── blank.png
