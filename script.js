@@ -1,7 +1,7 @@
 // words.js is loaded separately and provides `wordList`
 
 let currentWord = "";
-let displaySpeed = 1000;
+let displaySpeed = 400;
 let score = 0;
 
 // Elements
@@ -60,9 +60,9 @@ function showLetterSequence(word) {
 
       // ✅ Double-letter logic
       if (index > 0 && word[index] === word[index - 1]) {
-        img.src = `images/${lower}${lower}.png`;
+        img.src = `images/${upper}${upper}.png`;
       } else {
-        img.src = `images/${lower}.png`;
+        img.src = `images/${upper}.png`;
       }
 
       // ✅ Adjust timing for first & last letters
@@ -89,12 +89,12 @@ function showLetterSequence(word) {
 function showNextLetter(word, img, index) {
   if (index < word.length) {
     const char = word[index];
-    const lower = char.toLowerCase();
+    const upper = char.toUpperCase();
 
     if (index > 0 && word[index] === word[index - 1]) {
-      img.src = `images/${lower}${lower}.png`;
+      img.src = `images/${upper}${upper}.png`;
     } else {
-      img.src = `images/${lower}.png`;
+      img.src = `images/${upper}.png`;
     }
 
     let extraDelay = 0;
