@@ -116,7 +116,7 @@ function getExtraDelay() {
     case "600": return 0; // Slow → no extra
     case "400": return displaySpeed * 1.5; // Medium → 1.5x
     case "250": return displaySpeed * 1.7; // Fast → 1.7x
-    case "125": return displaySpeed * 4;   // Deaf → 2x
+    case "125": return displaySpeed * 4;   // Deaf → 4x
     default: return 0;
   }
 }
