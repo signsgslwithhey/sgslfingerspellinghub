@@ -1,3 +1,5 @@
+// words.js is loaded separately and provides `wordList`
+
 let currentWord = "";
 let displaySpeed = 400;
 let score = 0;
@@ -13,8 +15,10 @@ const fasterBtn = document.getElementById("fasterBtn");
 const scoreDisplay = document.getElementById("score");
 const wordInput = document.getElementById("wordInput");
 const checkBtn = document.getElementById("checkBtn");
+const loadingDiv = document.getElementById("loading");
+const gameDiv = document.getElementById("game");
 
-// ✅ Preload images (single + double + blank)
+// ✅ Preload all images (returns a Promise)
 function preloadImages() {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const imagesToLoad = [];
@@ -23,18 +27,25 @@ function preloadImages() {
     imagesToLoad.push(`images/${char}.png`);
     imagesToLoad.push(`images/${char}${char}.png`);
   }
-
   imagesToLoad.push("images/blank.png");
 
-  imagesToLoad.forEach(src => {
-    const img = new Image();
-    img.src = src;
+  let loaded = 0;
+  return new Promise((resolve) => {
+    imagesToLoad.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      img.onload = img.onerror = () => {
+        loaded++;
+        if (loaded === imagesToLoad.length) {
+          console.log("✅ All images preloaded!");
+          resolve();
+        }
+      };
+    });
   });
-
-  console.log("✅ All images preloading...");
 }
 
-// ✅ Show the fingerspelling sequence
+// ✅ Show fingerspelling sequence
 function showLetterSequence(word) {
   let index = -1;
   outputDiv.innerHTML = "";
@@ -77,7 +88,7 @@ function showLetterSequence(word) {
   }, displaySpeed);
 }
 
-// ✅ Recursive fallback to show remaining letters
+// ✅ Recursive display for smoother timing
 function showNextLetter(word, img, index) {
   if (index < word.length) {
     const char = word[index];
@@ -102,7 +113,7 @@ function showNextLetter(word, img, index) {
   }
 }
 
-// ✅ Adjust delay for first & last letters
+// ✅ Extra delay based on speed setting
 function getExtraDelay() {
   switch (speedSelect.value) {
     case "600": return 0;
@@ -113,42 +124,26 @@ function getExtraDelay() {
   }
 }
 
-// ✅ Get random word based on selection
+// ✅ Get random word
 function getRandomWord() {
-  const lengthSelected = maxLetters.value;  // from <select id="maxLetters">
-  const pool = wordListByLength[len] || [];  // chooses the correct list
-
-  if (lengthSelected === "any") {
-    for (const key in wordListByLength) {
-      pool = pool.concat(wordListByLength[key]);
-    }
-  } else {
-    const len = parseInt(lengthSelected);
-    pool = wordListByLength[len] || [];
+  const filterLength = maxLetters.value === "any" ? null : parseInt(maxLetters.value);
+  let filtered = wordList;
+  if (filterLength) {
+    filtered = wordList.filter(word => word.length <= filterLength);
   }
-
-  if (pool.length === 0) {
-    alert("⚠️ No words available for this length.");
-    return "";
-  }
-
-  return pool[Math.floor(Math.random() * pool.length)];
+  return filtered[Math.floor(Math.random() * filtered.length)];
 }
 
-// ✅ Show new word
+// ✅ New word
 function newWord() {
   currentWord = getRandomWord();
   wordInput.value = "";
-  if (currentWord) {
-    showLetterSequence(currentWord);
-  }
+  showLetterSequence(currentWord);
 }
 
-// ✅ Replay word
+// ✅ Replay
 function replayWord() {
-  if (currentWord) {
-    showLetterSequence(currentWord);
-  }
+  if (currentWord) showLetterSequence(currentWord);
 }
 
 // ✅ Check answer
@@ -164,10 +159,8 @@ checkBtn.addEventListener("click", function () {
   }
 });
 
-// ✅ Speed control
-speedSelect.addEventListener("change", () => {
-  displaySpeed = parseInt(speedSelect.value);
-});
+// ✅ Speed controls
+speedSelect.addEventListener("change", () => displaySpeed = parseInt(speedSelect.value));
 slowerBtn.addEventListener("click", () => {
   displaySpeed += 100;
   alert("Speed: " + displaySpeed + "ms per letter");
@@ -181,6 +174,9 @@ fasterBtn.addEventListener("click", () => {
 newWordBtn.addEventListener("click", newWord);
 replayBtn.addEventListener("click", replayWord);
 
-// ✅ Startup
-preloadImages();
-newWord();
+// ✅ Start game after all images are loaded
+preloadImages().then(() => {
+  loadingDiv.style.display = "none";
+  gameDiv.style.display = "block";
+  newWord();
+});
