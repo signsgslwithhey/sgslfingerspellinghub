@@ -1,5 +1,3 @@
-// words.js is loaded separately and provides `wordList`
-
 let currentWord = "";
 let displaySpeed = 400;
 let score = 0;
@@ -16,9 +14,9 @@ const scoreDisplay = document.getElementById("score");
 const wordInput = document.getElementById("wordInput");
 const checkBtn = document.getElementById("checkBtn");
 
-// ✅ Preload all images to avoid delay on first play
+// ✅ Preload images (single + double + blank)
 function preloadImages() {
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const letters = "abcdefghijklmnopqrstuvwxyz";
   const imagesToLoad = [];
 
   for (let char of letters) {
@@ -36,7 +34,7 @@ function preloadImages() {
   console.log("✅ All images preloading...");
 }
 
-// ✅ Show fingerspelling images
+// ✅ Show the fingerspelling sequence
 function showLetterSequence(word) {
   let index = -1;
   outputDiv.innerHTML = "";
@@ -79,7 +77,7 @@ function showLetterSequence(word) {
   }, displaySpeed);
 }
 
-// ✅ Recursive smoother playback
+// ✅ Recursive fallback to show remaining letters
 function showNextLetter(word, img, index) {
   if (index < word.length) {
     const char = word[index];
@@ -104,7 +102,7 @@ function showNextLetter(word, img, index) {
   }
 }
 
-// ✅ Extra delay for first and last letters
+// ✅ Adjust delay for first & last letters
 function getExtraDelay() {
   switch (speedSelect.value) {
     case "600": return 0;
@@ -115,39 +113,45 @@ function getExtraDelay() {
   }
 }
 
-// ✅ Get random word with exact length filter
+// ✅ Get random word based on selection
 function getRandomWord() {
-  const selected = maxLetters.value;
-  if (selected === "any") {
-    // Flatten all words
-    const allWords = Object.values(wordListByLength).flat();
-    return allWords[Math.floor(Math.random() * allWords.length)];
+  const lengthSelected = maxLetters.value;
+  let pool = [];
+
+  if (lengthSelected === "any") {
+    for (const key in wordListByLength) {
+      pool = pool.concat(wordListByLength[key]);
+    }
+  } else {
+    const len = parseInt(lengthSelected);
+    pool = wordListByLength[len] || [];
   }
 
-  const length = parseInt(selected);
-  const words = wordListByLength[length] || [];
-
-  if (words.length === 0) {
-    alert("No words available for this length.");
-    return "ERROR";
+  if (pool.length === 0) {
+    alert("⚠️ No words available for this length.");
+    return "";
   }
 
-  return words[Math.floor(Math.random() * words.length)];
+  return pool[Math.floor(Math.random() * pool.length)];
 }
 
-// ✅ New word
+// ✅ Show new word
 function newWord() {
   currentWord = getRandomWord();
   wordInput.value = "";
-  showLetterSequence(currentWord);
+  if (currentWord) {
+    showLetterSequence(currentWord);
+  }
 }
 
 // ✅ Replay word
 function replayWord() {
-  if (currentWord) showLetterSequence(currentWord);
+  if (currentWord) {
+    showLetterSequence(currentWord);
+  }
 }
 
-// ✅ Check user answer
+// ✅ Check answer
 checkBtn.addEventListener("click", function () {
   const userAnswer = wordInput.value.toUpperCase().trim();
   if (userAnswer === currentWord) {
@@ -160,8 +164,10 @@ checkBtn.addEventListener("click", function () {
   }
 });
 
-// ✅ Speed controls
-speedSelect.addEventListener("change", () => displaySpeed = parseInt(speedSelect.value));
+// ✅ Speed control
+speedSelect.addEventListener("change", () => {
+  displaySpeed = parseInt(speedSelect.value);
+});
 slowerBtn.addEventListener("click", () => {
   displaySpeed += 100;
   alert("Speed: " + displaySpeed + "ms per letter");
@@ -171,10 +177,10 @@ fasterBtn.addEventListener("click", () => {
   alert("Speed: " + displaySpeed + "ms per letter");
 });
 
-// ✅ Button listeners
+// ✅ Button events
 newWordBtn.addEventListener("click", newWord);
 replayBtn.addEventListener("click", replayWord);
 
-// ✅ Init
+// ✅ Startup
 preloadImages();
 newWord();
