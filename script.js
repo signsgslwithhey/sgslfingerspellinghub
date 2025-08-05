@@ -115,8 +115,8 @@ function getExtraDelay() {
 
 // ✅ Get random word based on selection
 function getRandomWord() {
-  const lengthSelected = maxLetters.value;
-  let pool = [];
+  const lengthSelected = maxLetters.value;  // from <select id="maxLetters">
+  const pool = wordListByLength[len] || [];  // chooses the correct list
 
   if (lengthSelected === "any") {
     for (const key in wordListByLength) {
