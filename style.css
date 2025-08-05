@@ -1,26 +1,31 @@
+/* Reset and base styles */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: #0f0f0f !important; /* changed background */
+  background: #0f0f0f !important; /* dark background */
   color: #fff;
   font-family: Arial, sans-serif;
   text-align: center;
 }
 
+/* Headings */
 h1 {
   color: #f1c40f;
 }
 
+/* Layout sections */
 #settings, #buttons, footer {
   background: transparent !important;
 }
 
+/* Labels */
 label {
   margin: 0 10px;
   font-weight: bold;
 }
 
+/* Inputs and selects */
 select, #wordInput {
   margin: 5px;
   padding: 5px;
@@ -31,6 +36,7 @@ select, #wordInput {
   color: #fff;
 }
 
+/* Buttons */
 button {
   background: #3498db;
   color: white;
@@ -47,29 +53,33 @@ button:hover {
   background: #2980b9;
 }
 
+/* Output area */
 #output {
-  margin: 20px 0 20px 0; /* add top and bottom margin */
+  margin: 20px 0;
   display: flex;
   justify-content: center;
   min-height: 120px;
   background: #0f0f0f;
 }
 
+/* Output image styling */
 #output img {
   height: 350px;
   width: 350px;
   margin: 0;
-  border-radius: 10;
+  border-radius: 10px; /* fixed: added px */
   background: #0f0f0f;
   padding: 10px;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
+/* Score display */
 #score {
   font-weight: bold;
   color: #2ecc71;
 }
 
+/* Footer */
 footer {
   margin-top: 40px;
   font-size: 0.9em;
